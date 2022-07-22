@@ -33,14 +33,14 @@ public class DuesPayment {
      @Column(name = "date", nullable = false) private Date date;
      @Enumerated @Column(name = "status", nullable = false) private PaymentStatus status;
 
-     @MapsId("academicYearId")
-     @ManyToOne(optional = false)
-     @JoinColumn(name = "academic_year_id", nullable = false)
-     private AcademicYear academicYear;
-
      @MapsId("studentId")
      @ManyToOne(optional = false)
      @JoinColumn(name = "student_id", nullable = false)
      private Student student;
+
+     @MapsId("academicYearId")
+     @ManyToOne(optional = false)
+     @JoinColumn(name = "academic_year_id", nullable = false)
+     private AcademicYear academicYear;
 
 }

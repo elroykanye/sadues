@@ -1,5 +1,6 @@
 package com.elroykanye.sadues.data.entity;
 
+import com.elroykanye.sadues.data.entity.relation.DuesPayment;
 import com.elroykanye.sadues.data.enums.Gender;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,7 +14,10 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -28,4 +32,8 @@ public class Student {
 	@Column(name = "reg_no", unique = true, nullable = false) private String regNo;
 	@Column(name = "password", nullable = false) private String password;
 	@Enumerated(EnumType.STRING) @Column(name = "gender", nullable = false) private Gender gender;
+
+	@OneToMany(mappedBy = "student", orphanRemoval = true)
+	private List<DuesPayment> duesPayments = new ArrayList<>();
+
 }

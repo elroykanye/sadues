@@ -1,13 +1,12 @@
 package com.elroykanye.sadues.data.entity.composite;
 
 import javax.persistence.Column;
-import java.io.Serial;
+import javax.persistence.Embeddable;
 import java.io.Serializable;
 
-public record DuesInfoKey (
-        @Column(name = "year_id") Long academicYearId,
-        @Column(name = "assoc_id") Long associationId
-) implements Serializable {
-    @Serial
-    private static final long serialVersionUID = 3690343896326723255L;
+@Embeddable
+public class DuesInfoKey implements Serializable {
+    private static final long serialVersionUID = 2554316551235785161L;
+    @Column(name = "year_id") Long academicYearId;
+    @Column(name = "assoc_id") Long associationId;
 }
