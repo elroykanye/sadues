@@ -3,8 +3,9 @@ package com.elroykanye.sadues.api.controller;
 
 import com.elroykanye.sadues.api.dto.AssociationDto;
 import com.elroykanye.sadues.api.dto.response.SaResponse;
-import com.elroykanye.sadues.business.service.AssociationService;
-import lombok.AllArgsConstructor;
+import com.elroykanye.sadues.business.service.i.AssociationService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,8 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+@Slf4j
 @RestController
-@AllArgsConstructor
+@RequiredArgsConstructor
 @RequestMapping(value = "/api/assoc")
 public class AssociationController {
     private final AssociationService associationService;

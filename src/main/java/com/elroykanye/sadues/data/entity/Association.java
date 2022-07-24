@@ -1,6 +1,7 @@
 package com.elroykanye.sadues.data.entity;
 
 import com.elroykanye.sadues.data.entity.relation.DuesInfo;
+import com.elroykanye.sadues.data.entity.relation.Member;
 import com.elroykanye.sadues.data.enums.AssociationType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,7 +21,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -38,10 +41,16 @@ public class Association {
     @JoinColumn(name = "university_id", nullable = false)
     private University university;
 
-    @OneToMany(mappedBy = "association", orphanRemoval = true)
-    private List<Executive> executives = new ArrayList<>();
-
     @OneToMany(mappedBy = "association", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<DuesInfo> duesInfoes = new ArrayList<>();
+    @ToString.Exclude
+    private List<DuesInfo> duesInfos = new ArrayList<>();
+
+    @ManyToOne
+    @JoinColumn(name = "head_association_id")
+    private Association headAssociation;
+
+    @OneToMany(mappedBy = "association", orphanRemoval = true)
+    @ToString.Exclude
+    private Set<Member> members = new LinkedHashSet<>();
 
 }

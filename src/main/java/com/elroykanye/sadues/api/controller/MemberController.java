@@ -1,10 +1,11 @@
 package com.elroykanye.sadues.api.controller;
 
 
-import com.elroykanye.sadues.api.dto.StudentDto;
+import com.elroykanye.sadues.api.dto.MemberDto;
 import com.elroykanye.sadues.api.dto.response.SaResponse;
-import com.elroykanye.sadues.business.service.StudentService;
-import lombok.AllArgsConstructor;
+import com.elroykanye.sadues.business.service.i.MemberService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,29 +17,30 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+@Slf4j
 @RestController
-@AllArgsConstructor
+@RequiredArgsConstructor
 @RequestMapping(value = "/api/student")
 public class StudentController {
-    private final StudentService studentService;
+    private final MemberService memberService;
 
     @PostMapping
-    public ResponseEntity<SaResponse> create(StudentDto studentDto) {
+    public ResponseEntity<SaResponse> create(MemberDto memberDto) {
         return null;
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<StudentDto> get(@PathVariable("id") Long id) {
+    public ResponseEntity<MemberDto> get(@PathVariable("id") Long id) {
         return null;
     }
 
     @GetMapping
-    public ResponseEntity<List<StudentDto>> getAll() {
+    public ResponseEntity<List<MemberDto>> getAll() {
         return null;
     }
 
     @PutMapping
-    public ResponseEntity<SaResponse> update(StudentDto studentDto) {
+    public ResponseEntity<SaResponse> update(MemberDto memberDto) {
         return null;
     }
 

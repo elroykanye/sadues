@@ -1,7 +1,6 @@
 package com.elroykanye.sadues.data.entity.relation;
 
 import com.elroykanye.sadues.data.entity.AcademicYear;
-import com.elroykanye.sadues.data.entity.Student;
 import com.elroykanye.sadues.data.entity.composite.DuesPaymentKey;
 import com.elroykanye.sadues.data.enums.PaymentStatus;
 import lombok.AllArgsConstructor;
@@ -36,7 +35,7 @@ public class DuesPayment {
      @MapsId("studentId")
      @ManyToOne(optional = false)
      @JoinColumn(name = "student_id", nullable = false)
-     private Student student;
+     private Member member;
 
      @MapsId("academicYearId")
      @ManyToOne(optional = false)
