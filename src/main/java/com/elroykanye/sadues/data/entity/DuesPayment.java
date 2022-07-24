@@ -1,7 +1,6 @@
-package com.elroykanye.sadues.data.entity.relation;
+package com.elroykanye.sadues.data.entity;
 
-import com.elroykanye.sadues.data.entity.AcademicYear;
-import com.elroykanye.sadues.data.entity.composite.DuesPaymentKey;
+import com.elroykanye.sadues.data.entity.relation.Member;
 import com.elroykanye.sadues.data.enums.PaymentStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,12 +9,13 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
 import javax.persistence.Table;
 import java.sql.Date;
 
@@ -27,19 +27,17 @@ import java.sql.Date;
 @AllArgsConstructor
 @Table(name = "dues_payment")
 public class DuesPayment {
-     @EmbeddedId private DuesPaymentKey key;
+     @Id @GeneratedValue private Long id;
      @Column(name = "amount", nullable = false) private Double amount;
      @Column(name = "date", nullable = false) private Date date;
      @Enumerated @Column(name = "status", nullable = false) private PaymentStatus status;
 
-     @MapsId("studentId")
-     @ManyToOne(optional = false)
-     @JoinColumn(name = "student_id", nullable = false)
-     private Member member;
 
-     @MapsId("academicYearId")
      @ManyToOne(optional = false)
-     @JoinColumn(name = "academic_year_id", nullable = false)
-     private AcademicYear academicYear;
+     @JoinColumns({
+             @JoinColumn(name = "MEMBER_USER_ID", referencedColumnName = "USER_ID", nullable = false),
+             @JoinColumn(name = "MEMBER_ASSOCIATION_ID", referencedColumnName = "ASSOCIATION_ID", nullable = false)
+     })
+     private Member member;
 
 }

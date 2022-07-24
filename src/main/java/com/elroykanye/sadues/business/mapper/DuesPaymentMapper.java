@@ -1,8 +1,10 @@
 package com.elroykanye.sadues.business.mapper;
 
 import com.elroykanye.sadues.api.dto.DuesPaymentDto;
+import com.elroykanye.sadues.api.dto.MemberDto;
 import com.elroykanye.sadues.data.entity.Association;
 import com.elroykanye.sadues.data.entity.DuesPayment;
+import com.elroykanye.sadues.data.entity.composite.MemberKey;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -15,17 +17,21 @@ import java.util.stream.Collectors;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = "spring")
 public interface DuesPaymentMapper {
-    @Mapping(source = "memberKey", target = "key")
+    @Mapping(target = "member", ignore = true)
     DuesPayment duesPaymentDtoToDuesPayment(DuesPaymentDto duesPaymentDto);
 
-    @Mapping(source = "key", target = "memberKey")
+    @Mapping(target = "memberKey", expression = "java(mapMemberKey(duesPayment.getMember().getKey()))")
     DuesPaymentDto duesPaymentToDuesPaymentDto(DuesPayment duesPayment);
 
-    @Mapping(source = "memberKey", target = "key")
+    @Mapping(target = "member", ignore = true)
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     DuesPayment updateDuesPaymentFromDuesPaymentDto(DuesPaymentDto duesPaymentDto, @MappingTarget DuesPayment duesPayment);
 
     default Set<Long> associationsToAssociationIds(Set<Association> associations) {
         return associations.stream().map(Association::getId).collect(Collectors.toSet());
+    }
+
+    default MemberDto.MemberKeyDto mapMemberKey(MemberKey key) {
+        return new MemberDto.MemberKeyDto(key.getUserId(), key.getAssociationId());
     }
 }
