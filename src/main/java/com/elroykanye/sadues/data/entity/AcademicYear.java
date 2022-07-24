@@ -1,7 +1,6 @@
 package com.elroykanye.sadues.data.entity;
 
 import com.elroykanye.sadues.data.entity.relation.DuesInfo;
-import com.elroykanye.sadues.data.entity.relation.DuesPayment;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,8 +32,5 @@ public class AcademicYear {
 
 	@OneToMany(mappedBy = "academicYear", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<DuesInfo> duesInfos = new ArrayList<>();
-
-	@OneToMany(mappedBy = "academicYear", orphanRemoval = true)
-	private List<DuesPayment> duesPayments = new ArrayList<>();
 
 }

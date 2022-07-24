@@ -3,8 +3,10 @@ package com.elroykanye.sadues.api.controller;
 
 import com.elroykanye.sadues.api.dto.AcademicYearDto;
 import com.elroykanye.sadues.api.dto.response.SaResponse;
-import com.elroykanye.sadues.business.service.AcademicYearService;
-import lombok.AllArgsConstructor;
+import com.elroykanye.sadues.business.service.i.AcademicYearService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,34 +18,41 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+@Slf4j
 @RestController
-@AllArgsConstructor
+@RequiredArgsConstructor
 @RequestMapping(value = "/api/academic_year")
 public class AcademicYearController {
     private final AcademicYearService academicYearService;
 
     @PostMapping
     public ResponseEntity<SaResponse> create(AcademicYearDto academicYearDto) {
-        return null;
+        log.info("Creating academic year {}", academicYearDto.name());
+        return new ResponseEntity<>(academicYearService.create(academicYearDto), HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<AcademicYearDto> get(@PathVariable("id") Long id) {
-        return null;
+        log.info("Getting DTO for academic year of id: {}", id);
+        return ResponseEntity.ok(academicYearService.getDto(id));
     }
 
     @GetMapping
     public ResponseEntity<List<AcademicYearDto>> getAll() {
-        return null;
+        log.info("Getting DTOs for all academic years");
+        return ResponseEntity.ok(academicYearService.getAllDto());
     }
 
     @PutMapping
     public ResponseEntity<SaResponse> update(AcademicYearDto academicYearDto) {
-        return null;
+        log.info("Updating academic year of id: {}", academicYearDto.id());
+        return ResponseEntity.ok(academicYearService.update(academicYearDto));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable("id") Long id) {
-        return null;
+        log.info("Deleting academic year of id: {}", id);
+        academicYearService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }
