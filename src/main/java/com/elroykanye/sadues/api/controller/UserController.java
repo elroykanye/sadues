@@ -1,9 +1,9 @@
 package com.elroykanye.sadues.api.controller;
 
 
-import com.elroykanye.sadues.api.dto.ExecutiveDto;
+import com.elroykanye.sadues.api.dto.UserDto;
 import com.elroykanye.sadues.api.dto.response.SaResponse;
-import com.elroykanye.sadues.business.service.i.ExecutiveService;
+import com.elroykanye.sadues.business.service.i.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -20,27 +20,27 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(value = "/api/executive")
-public class ExecutiveController {
-    private final ExecutiveService executiveService;
+@RequestMapping(value = "/api/user")
+public class UserController {
+    private final UserService userService;
 
     @PostMapping
-    public ResponseEntity<SaResponse> create(ExecutiveDto executiveDto) {
+    public ResponseEntity<SaResponse> create(UserDto userDto) {
         return null;
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ExecutiveDto> get(@PathVariable("id") Long id) {
+    public ResponseEntity<UserDto> get(@PathVariable("id") Long id) {
         return null;
     }
 
     @GetMapping
-    public ResponseEntity<List<ExecutiveDto>> getAll() {
+    public ResponseEntity<List<UserDto>> getAll() {
         return null;
     }
 
     @PutMapping
-    public ResponseEntity<SaResponse> update(ExecutiveDto executiveDto) {
+    public ResponseEntity<SaResponse> update(UserDto userDto) {
         return null;
     }
 
