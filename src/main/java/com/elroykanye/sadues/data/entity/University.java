@@ -28,6 +28,7 @@ public class University {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY) private Long id;
 	@Column(name = "name", nullable = false) private String name;
 	@Column(name = "location") private String location;
+	@Column(name = "approved") private Boolean approved;
 
 	@OneToMany(mappedBy = "university", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Association> associations = new ArrayList<>();
