@@ -1,14 +1,19 @@
 package com.elroykanye.sadues.business.service.impl;
-import com.elroykanye.sadues.api.dto.ExecutiveDto;
+import com.elroykanye.sadues.api.dto.MemberDto;
 import com.elroykanye.sadues.api.dto.response.SaResponse;
-import com.elroykanye.sadues.business.mapper.ExecutiveMapper;
+import com.elroykanye.sadues.business.mapper.MemberMapper;
+import com.elroykanye.sadues.business.service.i.AcademicYearService;
 import com.elroykanye.sadues.business.service.i.AssociationService;
-import com.elroykanye.sadues.business.service.i.ExecutiveService;
+import com.elroykanye.sadues.business.service.i.MemberService;
+import com.elroykanye.sadues.business.service.i.UserService;
 import com.elroykanye.sadues.config.constants.EntityName;
 import com.elroykanye.sadues.config.constants.ResponseMessage;
+import com.elroykanye.sadues.data.entity.AcademicYear;
 import com.elroykanye.sadues.data.entity.Association;
-import com.elroykanye.sadues.data.entity.Executive;
-import com.elroykanye.sadues.data.repository.ExecutiveRepository;
+import com.elroykanye.sadues.data.entity.User;
+import com.elroykanye.sadues.data.entity.composite.MemberKey;
+import com.elroykanye.sadues.data.entity.relation.Member;
+import com.elroykanye.sadues.data.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
@@ -18,64 +23,80 @@ import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
-public class ExecutiveServiceImpl implements ExecutiveService {
-    private final String entityName = EntityName.EXECUTIVE;
-    private final ExecutiveRepository executiveRepository;
-    private final ExecutiveMapper executiveMapper;
+public class MemberServiceImpl implements MemberService {
+    private final String entityName = EntityName.MEMBER;
+    private final MemberRepository memberRepository;
+    private final MemberMapper memberMapper;
     private final AssociationService associationService;
+    private final UserService userService;
+    private final AcademicYearService academicYearService;
 
     @NotNull
     @Override
-    public SaResponse create(@NotNull ExecutiveDto executiveDto) {
-        Executive executive = executiveMapper.executiveDtoToExecutive(executiveDto);
-        Association association = associationService.getEntity(executiveDto.associationId());
-        executive.setId(null);
-        executive.setAssociation(association);
+    public SaResponse create(@NotNull MemberDto memberDto) {
+        Member member = memberMapper.memberDtoToMember(memberDto);
+        Association association = associationService.getEntity(memberDto.key().associationId());
+        User user = userService.getEntity(memberDto.key().userId());
+        AcademicYear academicYear = academicYearService.getEntity(memberDto.academicYearId());
 
-        executive = executiveRepository.save(executive);
-        return new SaResponse(executive.getId(), ResponseMessage.SUCCESS.created(entityName));
+        member.setAssociation(association);
+        member.setUser(user);
+        member.setAcademicYear(academicYear);
+        member.setKey(new MemberKey(user.getId(), association.getId()));
+        member = memberRepository.save(member);
+        return new SaResponse(member.getKey(), ResponseMessage.SUCCESS.created(entityName));
     }
 
     @NotNull
     @Override
-    public Executive getEntity(long id) {
-        return executiveRepository.findById(id).orElseThrow();
+    public Member getEntity(long userId, long associationId) {
+        MemberKey key = new MemberKey(userId, associationId);
+        return memberRepository.findById(key).orElseThrow();
     }
 
     @NotNull
     @Override
-    public ExecutiveDto getDto(long id) {
-        return executiveMapper.executiveToExecutiveDto(getEntity(id));
+    public MemberDto getDto(long userId, long associationId) {
+        return memberMapper.memberToMemberDto(getEntity(userId, associationId));
     }
 
     @NotNull
     @Override
-    public List<Executive> getAllEntities() {
-        return executiveRepository.findAll();
+    public List<Member> getAllEntities() {
+        return memberRepository.findAll();
     }
 
     @NotNull
     @Override
-    public List<ExecutiveDto> getAllDto() {
-        return getAllEntities().stream().map(executiveMapper::executiveToExecutiveDto).toList();
+    public List<MemberDto> getAllDto() {
+        return getAllEntities().stream().map(memberMapper::memberToMemberDto).toList();
     }
 
     @NotNull
     @Override
-    public SaResponse update(@NotNull ExecutiveDto executiveDto) {
-        Executive executive = getEntity(executiveDto.id());
-        executive.setName(executive.getName());
-        executive.setPosition(executive.getPosition());
-        if (!Objects.equals(executive.getAssociation().getId(), executiveDto.associationId())) {
-            Association association = associationService.getEntity(executiveDto.associationId());
-            executive.setAssociation(association);
+    public SaResponse update(@NotNull MemberDto memberDto) {
+        Member member = getEntity(memberDto.key().userId(), memberDto.key().associationId());
+
+        member.setPosition(member.getPosition());
+        if (!Objects.equals(member.getAssociation().getId(), memberDto.key().associationId())) {
+            Association association = associationService.getEntity(memberDto.key().associationId());
+            member.setAssociation(association);
         }
-        executive = executiveRepository.save(executive);
-        return new SaResponse(executive.getId(), ResponseMessage.SUCCESS.updated(entityName));
+        if (!Objects.equals(member.getUser().getId(), memberDto.key().userId())) {
+            User user = userService.getEntity(memberDto.key().userId());
+            member.setUser(user);
+        }
+        if (member.getAcademicYear().getId() != memberDto.academicYearId()) {
+            AcademicYear academicYear = academicYearService.getEntity(memberDto.academicYearId());
+            member.setAcademicYear(academicYear);
+        }
+        member = memberRepository.save(member);
+        return new SaResponse(member.getKey(), ResponseMessage.SUCCESS.updated(entityName));
     }
 
     @Override
-    public void delete(long id) {
-        executiveRepository.deleteById(id);
+    public void delete(long userId, long associationId) {
+        Member member = getEntity(userId, associationId);
+        memberRepository.delete(member);
     }
 }

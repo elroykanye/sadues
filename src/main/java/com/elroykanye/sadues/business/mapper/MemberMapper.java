@@ -2,6 +2,7 @@ package com.elroykanye.sadues.business.mapper;
 
 import com.elroykanye.sadues.api.dto.MemberDto;
 import com.elroykanye.sadues.data.entity.Association;
+import com.elroykanye.sadues.data.entity.composite.MemberKey;
 import com.elroykanye.sadues.data.entity.relation.Member;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
@@ -16,8 +17,10 @@ import java.util.stream.Collectors;
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = "spring")
 public interface MemberMapper {
     @Mapping(source = "academicYearId", target = "academicYear.id")
+    @Mapping(target = "key", expression = "java(mapKey(memberDto.key()))")
     Member memberDtoToMember(MemberDto memberDto);
 
+    @Mapping(target = "key", expression = "java(inverseMapKey(member.getKey()))")
     @Mapping(source = "academicYear.id", target = "academicYearId")
     MemberDto memberToMemberDto(Member member);
 
@@ -27,5 +30,13 @@ public interface MemberMapper {
 
     default Set<Long> associationsToAssociationIds(Set<Association> associations) {
         return associations.stream().map(Association::getId).collect(Collectors.toSet());
+    }
+
+    default MemberKey mapKey(MemberDto.MemberKeyDto keyDto) {
+        return new MemberKey(keyDto.userId(), keyDto.associationId());
+    }
+
+    default MemberDto.MemberKeyDto inverseMapKey(MemberKey key) {
+        return new MemberDto.MemberKeyDto(key.getUserId(), key.getAssociationId());
     }
 }
