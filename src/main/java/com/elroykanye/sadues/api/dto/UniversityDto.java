@@ -1,10 +1,9 @@
 package com.elroykanye.sadues.api.dto;
 
-import org.jetbrains.annotations.NotNull;
-
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 public record UniversityDto(
         Long id,
-        @NotNull String name, String location, Boolean approved) implements Serializable {
+        @NotNull String name, @NotNull String location, @NotNull Boolean approved, Long currentYearId) implements Serializable {
 }

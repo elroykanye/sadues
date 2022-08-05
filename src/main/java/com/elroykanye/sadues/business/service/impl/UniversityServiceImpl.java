@@ -2,9 +2,11 @@ package com.elroykanye.sadues.business.service.impl;
 import com.elroykanye.sadues.api.dto.UniversityDto;
 import com.elroykanye.sadues.api.dto.response.SaResponse;
 import com.elroykanye.sadues.business.mapper.UniversityMapper;
+import com.elroykanye.sadues.business.service.i.AcademicYearService;
 import com.elroykanye.sadues.business.service.i.UniversityService;
 import com.elroykanye.sadues.config.constants.EntityName;
 import com.elroykanye.sadues.config.constants.ResponseMessage;
+import com.elroykanye.sadues.data.entity.AcademicYear;
 import com.elroykanye.sadues.data.entity.University;
 import com.elroykanye.sadues.data.repository.UniversityRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,11 +21,16 @@ public class UniversityServiceImpl implements UniversityService {
     private final String entityName = EntityName.UNIVERSITY;
     private final UniversityRepository universityRepository;
     private final UniversityMapper universityMapper;
+    private final AcademicYearService academicYearService;
 
     @NotNull
     @Override
     public SaResponse create(@NotNull UniversityDto universityDto) {
         University university = universityMapper.universityDtoToUniversity(universityDto);
+        if (universityDto.currentYearId() != null) {
+            AcademicYear academicYear = academicYearService.getEntity(universityDto.currentYearId());
+            university.setCurrentYear(academicYear);
+        }
         university.setId(null);
         university.setApproved(false);
         university = universityRepository.save(university);
@@ -58,6 +65,12 @@ public class UniversityServiceImpl implements UniversityService {
     @Override
     public SaResponse update(@NotNull UniversityDto universityDto) {
         University university = getEntity(universityDto.id());
+        if (universityDto.currentYearId() != null) {
+            AcademicYear academicYear = academicYearService.getEntity(universityDto.currentYearId());
+            university.setCurrentYear(academicYear);
+            System.out.println(university);
+        }
+
         university.setApproved(universityDto.approved() != null && universityDto.approved());
         university.setLocation(universityDto.location());
         university.setName(universityDto.name());

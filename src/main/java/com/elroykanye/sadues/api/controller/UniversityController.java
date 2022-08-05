@@ -12,12 +12,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
-@Slf4j
+@Slf4j // TODO add logging
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(value = "/api/university")
@@ -25,12 +28,12 @@ public class UniversityController {
     private final UniversityService universityService;
 
     @PostMapping
-    public ResponseEntity<SaResponse> create(UniversityDto universityDto) {
+    public ResponseEntity<SaResponse> create(@Valid @RequestBody UniversityDto universityDto) {
         return new ResponseEntity<>(universityService.create(universityDto), HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UniversityDto> get(@PathVariable("id") Long id) {
+    public ResponseEntity<UniversityDto> get(@NotNull @PathVariable("id") Long id) {
         return ResponseEntity.ok(universityService.getDto(id));
     }
 
@@ -40,7 +43,7 @@ public class UniversityController {
     }
 
     @PutMapping
-    public ResponseEntity<SaResponse> update(UniversityDto universityDto) {
+    public ResponseEntity<SaResponse> update(@Valid @RequestBody UniversityDto universityDto) {
         return ResponseEntity.ok(universityService.update(universityDto));
     }
 
