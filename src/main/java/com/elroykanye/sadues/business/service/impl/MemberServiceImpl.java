@@ -13,6 +13,7 @@ import com.elroykanye.sadues.data.entity.Association;
 import com.elroykanye.sadues.data.entity.User;
 import com.elroykanye.sadues.data.entity.composite.MemberKey;
 import com.elroykanye.sadues.data.entity.relation.Member;
+import com.elroykanye.sadues.data.enums.Position;
 import com.elroykanye.sadues.data.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
@@ -29,7 +30,6 @@ public class MemberServiceImpl implements MemberService {
     private final MemberMapper memberMapper;
     private final AssociationService associationService;
     private final UserService userService;
-    private final AcademicYearService academicYearService;
 
     @NotNull
     @Override
@@ -37,15 +37,17 @@ public class MemberServiceImpl implements MemberService {
         Member member = memberMapper.memberDtoToMember(memberDto);
         Association association = associationService.getEntity(memberDto.key().associationId());
         User user = userService.getEntity(memberDto.key().userId());
-        AcademicYear academicYear = academicYearService.getEntity(memberDto.academicYearId());
 
         member.setAssociation(association);
         member.setUser(user);
-        member.setAcademicYear(academicYear);
+        member.setPosition(memberDto.position() == null ? Position.MEMBER : memberDto.position());
+        member.setJoinedYear(association.getUniversity().getCurrentYear().getName()); // todo impl functionality for retrieving current year name
         member.setKey(new MemberKey(user.getId(), association.getId()));
         member = memberRepository.save(member);
         return new SaResponse(member.getKey(), ResponseMessage.SUCCESS.created(entityName));
     }
+
+
 
     @NotNull
     @Override
@@ -86,10 +88,7 @@ public class MemberServiceImpl implements MemberService {
             User user = userService.getEntity(memberDto.key().userId());
             member.setUser(user);
         }
-        if (member.getAcademicYear().getId() != memberDto.academicYearId()) {
-            AcademicYear academicYear = academicYearService.getEntity(memberDto.academicYearId());
-            member.setAcademicYear(academicYear);
-        }
+
         member = memberRepository.save(member);
         return new SaResponse(member.getKey(), ResponseMessage.SUCCESS.updated(entityName));
     }

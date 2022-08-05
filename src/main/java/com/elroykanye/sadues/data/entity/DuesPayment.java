@@ -12,6 +12,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
@@ -27,7 +28,7 @@ import java.sql.Date;
 @AllArgsConstructor
 @Table(name = "dues_payment")
 public class DuesPayment {
-     @Id @GeneratedValue private Long id;
+     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) private Long id;
      @Column(name = "amount", nullable = false) private Double amount;
      @Column(name = "date", nullable = false) private Date date;
      @Enumerated @Column(name = "status", nullable = false) private PaymentStatus status;
