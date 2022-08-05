@@ -13,6 +13,7 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -27,7 +28,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Table(name = "user")
 public class User {
-    @Id @GeneratedValue private Long id;
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) private Long id;
     @Column(name = "name", nullable = false) private String name;
     @Column(name = "reg_no", unique = true, nullable = false) private String regNo;
     @Column(name = "password", nullable = false) private String password;
@@ -36,6 +37,7 @@ public class User {
     @Enumerated(EnumType.STRING) @Column(name = "gender", nullable = false) private Gender gender;
 
     @OneToMany(mappedBy = "user", orphanRemoval = true)
+    @ToString.Exclude
     private Set<Member> members = new LinkedHashSet<>();
 
 }
