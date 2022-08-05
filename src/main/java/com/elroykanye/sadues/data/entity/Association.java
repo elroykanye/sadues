@@ -4,6 +4,7 @@ import com.elroykanye.sadues.data.entity.relation.DuesInfo;
 import com.elroykanye.sadues.data.entity.relation.Member;
 import com.elroykanye.sadues.data.enums.AssociationType;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -28,6 +29,7 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
+@Builder
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
@@ -42,15 +44,19 @@ public class Association {
     private University university;
 
     @OneToMany(mappedBy = "association", cascade = CascadeType.ALL, orphanRemoval = true)
-    @ToString.Exclude
+    @ToString.Exclude @Builder.Default
     private List<DuesInfo> duesInfos = new ArrayList<>();
+
+    @OneToMany(mappedBy = "association", orphanRemoval = true)
+    @ToString.Exclude @Builder.Default
+    private Set<Member> members = new LinkedHashSet<>();
 
     @ManyToOne
     @JoinColumn(name = "head_association_id")
     private Association headAssociation;
 
-    @OneToMany(mappedBy = "association", orphanRemoval = true)
-    @ToString.Exclude
-    private Set<Member> members = new LinkedHashSet<>();
+    @OneToMany(mappedBy = "headAssociation", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude @Builder.Default
+    private List<Association> subAssociations = new ArrayList<>();
 
 }

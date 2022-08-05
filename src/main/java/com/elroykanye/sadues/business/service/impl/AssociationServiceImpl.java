@@ -34,6 +34,26 @@ public class AssociationServiceImpl implements AssociationService {
         association.setId(null);
         association.setUniversity(university);
 
+        if(associationDto.headAssociationId() == null) {
+            Association mainAssociation = associationRepository.findByUniversityAndType(university, AssociationType.MAIN).orElseGet(
+                    () -> {
+                        var mainAssoc = Association.builder()
+                                .name(String.format("%s Student Association", university.getName()))
+                                .type(AssociationType.MAIN)
+                                .university(university)
+                                .id(null)
+                                .build();
+                        return associationRepository.save(mainAssoc);
+                    }
+            );
+            association.setHeadAssociation(mainAssociation);
+            association.setType(AssociationType.HEAD);
+        } else {
+            Association headAssociation = getEntity(associationDto.headAssociationId());
+            association.setHeadAssociation(headAssociation);
+            association.setType(AssociationType.SUB);
+        }
+
         association = associationRepository.save(association);
         return new SaResponse(association.getId(), ResponseMessage.SUCCESS.created(entityName));
     }
