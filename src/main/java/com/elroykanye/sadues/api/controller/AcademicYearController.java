@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Slf4j
@@ -26,7 +28,7 @@ public class AcademicYearController {
     private final AcademicYearService academicYearService;
 
     @PostMapping
-    public ResponseEntity<SaResponse> create(AcademicYearDto academicYearDto) {
+    public ResponseEntity<SaResponse> create(@Valid @RequestBody AcademicYearDto academicYearDto) {
         log.info("Creating academic year {}", academicYearDto.name());
         return new ResponseEntity<>(academicYearService.create(academicYearDto), HttpStatus.CREATED);
     }
@@ -44,7 +46,7 @@ public class AcademicYearController {
     }
 
     @PutMapping
-    public ResponseEntity<SaResponse> update(AcademicYearDto academicYearDto) {
+    public ResponseEntity<SaResponse> update(@Valid @RequestBody AcademicYearDto academicYearDto) {
         log.info("Updating academic year of id: {}", academicYearDto.id());
         return ResponseEntity.ok(academicYearService.update(academicYearDto));
     }
