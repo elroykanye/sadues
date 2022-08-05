@@ -35,12 +35,12 @@ import java.util.List;
 @Table(name = "member")
 public class Member {
 	@EmbeddedId private MemberKey key;
-
+	@Column(name = "joined_year", nullable = false) private String joinedYear;
 	@Enumerated(EnumType.STRING) @Column(name = "position", nullable = false) private Position position;
-
-	@ManyToOne(optional = false) @JoinColumn(name = "academic_year_id", nullable = false) private AcademicYear academicYear;
-
-	@OneToMany(mappedBy = "member", orphanRemoval = true) private List<DuesPayment> duesPayments = new ArrayList<>();
+	
+	@OneToMany(mappedBy = "member", orphanRemoval = true)
+	@ToString.Exclude
+	private List<DuesPayment> duesPayments = new ArrayList<>();
 
 	@MapsId("userId")
 	@ManyToOne(optional = false) @JoinColumn(name = "user_id", nullable = false) private User user;

@@ -16,15 +16,12 @@ import java.util.stream.Collectors;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = "spring")
 public interface MemberMapper {
-    @Mapping(source = "academicYearId", target = "academicYear.id")
     @Mapping(target = "key", expression = "java(mapKey(memberDto.key()))")
     Member memberDtoToMember(MemberDto memberDto);
 
     @Mapping(target = "key", expression = "java(inverseMapKey(member.getKey()))")
-    @Mapping(source = "academicYear.id", target = "academicYearId")
     MemberDto memberToMemberDto(Member member);
 
-    @Mapping(source = "academicYearId", target = "academicYear.id")
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     Member updateMemberFromMemberDto(MemberDto memberDto, @MappingTarget Member member);
 
