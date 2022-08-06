@@ -1,4 +1,4 @@
-import { University } from './university.model';
+import {University} from './university.model';
 
 describe('University', () => {
   it('should create an instance', () => {

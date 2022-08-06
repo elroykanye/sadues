@@ -13,7 +13,8 @@ export class AssocService {
   constructor(
     @Inject(ASSOC_API_URL) private apiUrl: string,
     private http: HttpClient
-  ) {}
+  ) {
+  }
 
   create = (assoc: Assoc): Observable<SaResponse> => this.http.post<SaResponse>(this.apiUrl, assoc);
   getAll = (): Observable<Assoc[]> => this.http.get<Assoc[]>(this.apiUrl);

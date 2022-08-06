@@ -5,5 +5,6 @@ export class University {
     public location: string,
     public approved: boolean,
     public currentYearId?: number
-  ) {}
+  ) {
+  }
 }

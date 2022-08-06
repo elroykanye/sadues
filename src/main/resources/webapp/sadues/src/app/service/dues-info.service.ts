@@ -13,7 +13,8 @@ export class DuesInfoService {
   constructor(
     @Inject(DUES_INFO_API_URL) private apiUrl: string,
     private http: HttpClient
-  ) {}
+  ) {
+  }
 
   create = (duesInfo: DuesInfo): Observable<SaResponse> => this.http.post<SaResponse>(this.apiUrl, duesInfo);
   getAll = (): Observable<DuesInfo[]> => this.http.get<DuesInfo[]>(this.apiUrl);

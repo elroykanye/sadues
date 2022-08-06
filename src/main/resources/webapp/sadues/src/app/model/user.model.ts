@@ -6,7 +6,8 @@ export class User {
     public name: string,
     public role: string,
     public gender: Gender
-  ) {}
+  ) {
+  }
 }
 
 export enum Gender {
@@ -14,6 +15,7 @@ export enum Gender {
   FEMALE = "FEMALE",
   OTHER = "OTHER"
 }
+
 export enum Role {
   USER = "USER",
   ADMIN = "ADMIN"

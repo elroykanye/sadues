@@ -13,7 +13,8 @@ export class MembershipService {
   constructor(
     @Inject(MEMBERSHIP_API_URL) private apiUrl: string,
     private http: HttpClient
-  ) {}
+  ) {
+  }
 
   create = (membership: Membership): Observable<SaResponse> => this.http.post<SaResponse>(this.apiUrl, membership);
   getAll = (): Observable<Membership[]> => this.http.get<Membership[]>(this.apiUrl);

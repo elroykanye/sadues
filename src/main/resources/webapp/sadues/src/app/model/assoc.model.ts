@@ -4,5 +4,6 @@ export class Assoc {
     public name: string,
     universityId: number,
     headAssociationId?: number
-  ) {}
+  ) {
+  }
 }

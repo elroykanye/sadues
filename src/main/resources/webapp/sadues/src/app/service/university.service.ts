@@ -13,7 +13,8 @@ export class UniversityService {
   constructor(
     @Inject(UNIVERSITY_API_URL) private apiUrl: string,
     private http: HttpClient
-  ) {}
+  ) {
+  }
 
   create = (university: University): Observable<SaResponse> => this.http.post<SaResponse>(this.apiUrl, university);
   getAll = (): Observable<University[]> => this.http.get<University[]>(this.apiUrl);

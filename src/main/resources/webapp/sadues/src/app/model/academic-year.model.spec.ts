@@ -1,4 +1,4 @@
-import { AcademicYear } from './academic-year.model';
+import {AcademicYear} from './academic-year.model';
 
 describe('AcademicYear', () => {
   it('should create an instance', () => {

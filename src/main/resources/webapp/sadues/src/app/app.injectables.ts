@@ -32,7 +32,7 @@ const duesInfoInjectable: Array<any> = [
 ]
 const duesPaymentInjectable: Array<any> = [
   {provide: DuesPaymentService, useValue: DuesPaymentService},
-{provide: DUES_PAYMENT_API_URL, useValue: `${serverApiUrl}/dues_payment`}
+  {provide: DUES_PAYMENT_API_URL, useValue: `${serverApiUrl}/dues_payment`}
 ]
 const membershipInjectable: Array<any> = [
   {provide: MembershipService, useValue: MembershipService},

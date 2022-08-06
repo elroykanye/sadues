@@ -7,7 +7,8 @@ export class DuesPayment {
     public date: Date,
     public status: PaymentStatus,
     membershipKey: MembershipKey
-  ) {}
+  ) {
+  }
 }
 
 export enum PaymentStatus {

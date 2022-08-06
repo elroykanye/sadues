@@ -13,7 +13,8 @@ export class AcademicYearService {
   constructor(
     @Inject(ACADEMIC_YEAR_API_URL) private apiUrl: string,
     private http: HttpClient
-  ) {}
+  ) {
+  }
 
   create = (academicYear: AcademicYear): Observable<SaResponse> => this.http.post<SaResponse>(this.apiUrl, academicYear);
   getAll = (): Observable<AcademicYear[]> => this.http.get<AcademicYear[]>(this.apiUrl);
