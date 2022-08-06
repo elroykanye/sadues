@@ -35,7 +35,8 @@ public class MemberController {
 
     @GetMapping("/key")
     public ResponseEntity<MemberDto> get(@RequestParam("userId") Long userId, @RequestParam("associationId") Long associationId) {
-        return ResponseEntity.ok(memberService.getDto(userId, associationId));
+        MemberDto.MemberKeyDto keyDto = new MemberDto.MemberKeyDto(userId, associationId);
+        return ResponseEntity.ok(memberService.getDto(keyDto));
     }
 
     @GetMapping
@@ -50,7 +51,8 @@ public class MemberController {
 
     @DeleteMapping("/key")
     public ResponseEntity<Void> delete(@RequestParam("userId") Long userId, @RequestParam("associationId") Long associationId) {
-        memberService.delete(userId, associationId);
-        return ResponseEntity.ok().build();
+        MemberDto.MemberKeyDto keyDto = new MemberDto.MemberKeyDto(userId, associationId);
+        memberService.delete(keyDto);
+        return ResponseEntity.noContent().build();
     }
 }
