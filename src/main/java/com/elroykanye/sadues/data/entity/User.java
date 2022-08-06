@@ -2,6 +2,7 @@ package com.elroykanye.sadues.data.entity;
 
 import com.elroykanye.sadues.data.entity.relation.Membership;
 import com.elroykanye.sadues.data.enums.Gender;
+import com.elroykanye.sadues.data.enums.Role;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,10 +30,11 @@ import java.util.Set;
 @Table(name = "user")
 public class User {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) private Long id;
-    @Column(nullable = false) private String name;
-    @Column(unique = true, nullable = false) private String regNo;
-    @Column(nullable = false) private String password;
     @Column private String email;
+    @Column(unique = true, nullable = false) private String regNo;
+    @Column(nullable = false) private String name;
+    @Column(nullable = false) private String password;
+    @Column(nullable = false) private Role role;
 
     @Enumerated(EnumType.STRING) @Column(name = "gender", nullable = false) private Gender gender;
 
