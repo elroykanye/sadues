@@ -1,9 +1,24 @@
-import { Injectable } from '@angular/core';
+import {Inject, Injectable} from '@angular/core';
+import {MEMBERSHIP_API_URL} from "../app.injectables";
+import {HttpClient} from "@angular/common/http";
+import {Membership} from "../model/membership.model";
+import {Observable} from "rxjs";
+import {SaResponse} from "../model/response/sa-response";
 
 @Injectable({
   providedIn: 'root'
 })
 export class MembershipService {
 
-  constructor() { }
+  constructor(
+    @Inject(MEMBERSHIP_API_URL) private apiUrl: string,
+    private http: HttpClient
+  ) {}
+
+  create = (membership: Membership): Observable<SaResponse> => this.http.post<SaResponse>(this.apiUrl, membership);
+  getAll = (): Observable<Membership[]> => this.http.get<Membership[]>(this.apiUrl);
+  getById = (id: number): Observable<Membership> => this.http.get<Membership>(`${this.apiUrl}/${id}`);
+  update = (membership: Membership): Observable<SaResponse> => this.http.put<SaResponse>(this.apiUrl, membership);
+  delete = (id: number): Observable<void> => this.http.delete<void>(`${this.apiUrl}/${id}`);
+
 }
