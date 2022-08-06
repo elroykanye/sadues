@@ -1,0 +1,32 @@
+<div class="surface-card p-4 border-round w-full lg:w-full">
+  <div class="text-center mb-5">
+    <div class="text-900 text-3xl font-medium mb-3">Register</div>
+    <span class="text-600 font-medium line-height-3">Already have an account?</span>
+    <a class="font-medium no-underline ml-2 text-teal-500 cursor-pointer">Login now!</a>
+  </div>
+  <div class="bg-teal-50 border-round w-full flex align-self-center justify-content-center">
+    <form [formGroup]="registerForm" (submit)="registerAction()" class="w-8 lg:w-6 py-4 lg:py-6">
+      <label for="username" class="block text-700 font-medium mb-2">Email</label>
+      <input id="username" pInputText class="w-full mb-3" placeholder="john.doe@email.com" [formControlName]="'username'">
+
+      <label for="password" class="block text-700 font-medium mb-2">Password</label>
+      <input id="password" pPassword class="w-full mb-3" [formControlName]="'password'">
+
+      <label for="repeat-password" class="block text-700 font-medium mb-2">Repeat Password</label>
+      <input id="repeat-password" pPassword class="w-full mb-3" [formControlName]="'password'">
+
+      <label for="regno" class="block text-700 font-medium mb-2">Registration Number</label>
+      <input id="regno" pInputText class="w-full mb-3" placeholder="UBA22X0001" [formControlName]="'regno'">
+
+      <label for="name" class="block text-700 font-medium mb-2">Full Name</label>
+      <input id="name" pInputText class="w-full mb-3" placeholder="John Doe" [formControlName]="'name'">
+
+      <label for="university" class="block text-700 font-medium mb-2">University</label>
+      <p-dropdown id="university" [options]="universities" [optionLabel]="'name'" [optionValue]="'id'"
+        [styleClass]="'w-full mb-3'" placeholder="Select University" [formControlName]="'university'"></p-dropdown>
+
+      <button pButton icon="pi pi-user-plus" label="Sign Up"></button>
+    </form>
+  </div>
+
+</div>
