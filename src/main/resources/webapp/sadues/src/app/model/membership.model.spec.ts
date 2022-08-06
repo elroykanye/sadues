@@ -1,7 +1,7 @@
-import { Membership } from './membership.model';
+import {Membership, MembershipKey, Position} from './membership.model';
 
 describe('Membership', () => {
   it('should create an instance', () => {
-    expect(new Membership()).toBeTruthy();
+    expect(new Membership(new MembershipKey(1, 1), Position.MEMBER)).toBeTruthy();
   });
 });
