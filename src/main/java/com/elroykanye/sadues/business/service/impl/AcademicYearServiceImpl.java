@@ -8,7 +8,7 @@ import com.elroykanye.sadues.config.constants.ResponseMessage;
 import com.elroykanye.sadues.data.entity.AcademicYear;
 import com.elroykanye.sadues.data.repository.AcademicYearRepository;
 import lombok.RequiredArgsConstructor;
-import org.jetbrains.annotations.NotNull;
+
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -21,44 +21,44 @@ public class AcademicYearServiceImpl implements AcademicYearService {
     private final AcademicYearRepository academicYearRepository;
     private final AcademicYearMapper academicYearMapper;
     
-    @NotNull
+    
     @Override
-    public SaResponse create(@NotNull AcademicYearDto academicYearDto) {
-        AcademicYear academicYear = academicYearMapper.academicYearDtoToAcademicYear(academicYearDto);
+    public SaResponse create( AcademicYearDto dto) {
+        AcademicYear academicYear = academicYearMapper.academicYearDtoToAcademicYear(dto);
         academicYear.setId(null);
         academicYear = academicYearRepository.save(academicYear);
         return new SaResponse(academicYear.getId(), ResponseMessage.SUCCESS.created(entityName));
     }
 
-    @NotNull
+    
     @Override
     public AcademicYear getEntity(long id) {
         return academicYearRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
-    @NotNull
+    
     @Override
     public AcademicYearDto getDto(long id) {
         return academicYearMapper.academicYearToAcademicYearDto(getEntity(id));
     }
 
-    @NotNull
+    
     @Override
     public List<AcademicYear> getAllEntities() {
         return academicYearRepository.findAll();
     }
 
-    @NotNull
+    
     @Override
     public List<AcademicYearDto> getAllDto() {
         return getAllEntities().stream().map(academicYearMapper::academicYearToAcademicYearDto).toList();
     }
 
-    @NotNull
+    
     @Override
-    public SaResponse update(@NotNull AcademicYearDto academicYearDto) {
-        AcademicYear academicYear = getEntity(academicYearDto.id());
-        academicYear.setName(academicYearDto.name());
+    public SaResponse update( AcademicYearDto dto) {
+        AcademicYear academicYear = getEntity(dto.id());
+        academicYear.setName(dto.name());
         academicYear = academicYearRepository.save(academicYear);
         return new SaResponse(academicYear.getId(), ResponseMessage.SUCCESS.updated(entityName));
     }

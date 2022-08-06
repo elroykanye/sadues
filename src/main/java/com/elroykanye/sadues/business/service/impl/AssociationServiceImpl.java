@@ -11,7 +11,7 @@ import com.elroykanye.sadues.data.entity.University;
 import com.elroykanye.sadues.data.enums.AssociationType;
 import com.elroykanye.sadues.data.repository.AssociationRepository;
 import lombok.RequiredArgsConstructor;
-import org.jetbrains.annotations.NotNull;
+
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -26,15 +26,15 @@ public class AssociationServiceImpl implements AssociationService {
     private final AssociationMapper associationMapper;
     private final UniversityService universityService;
 
-    @NotNull
+    
     @Override
-    public SaResponse create(@NotNull AssociationDto associationDto) {
-        Association association = associationMapper.associationDtoToAssociation(associationDto);
-        University university = universityService.getEntity(associationDto.universityId());
+    public SaResponse create( AssociationDto dto) {
+        Association association = associationMapper.associationDtoToAssociation(dto);
+        University university = universityService.getEntity(dto.universityId());
         association.setId(null);
         association.setUniversity(university);
 
-        if(associationDto.headAssociationId() == null) {
+        if(dto.headAssociationId() == null) {
             Association mainAssociation = associationRepository.findByUniversityAndType(university, AssociationType.MAIN).orElseGet(
                     () -> {
                         var mainAssoc = Association.builder()
@@ -49,7 +49,7 @@ public class AssociationServiceImpl implements AssociationService {
             association.setHeadAssociation(mainAssociation);
             association.setType(AssociationType.HEAD);
         } else {
-            Association headAssociation = getEntity(associationDto.headAssociationId());
+            Association headAssociation = getEntity(dto.headAssociationId());
             association.setHeadAssociation(headAssociation);
             association.setType(AssociationType.SUB);
         }
@@ -58,44 +58,44 @@ public class AssociationServiceImpl implements AssociationService {
         return new SaResponse(association.getId(), ResponseMessage.SUCCESS.created(entityName));
     }
 
-    @NotNull
+    
     @Override
     public Association getEntity(long id) {
         return associationRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
-    @NotNull
+    
     @Override
     public AssociationDto getDto(long id) {
         return associationMapper.associationToAssociationDto(getEntity(id));
     }
 
-    @NotNull
+    
     @Override
     public List<Association> getAllEntities() {
         return associationRepository.findAll();
     }
 
-    @NotNull
+    
     @Override
     public List<AssociationDto> getAllDto() {
         return getAllEntities().stream().map(associationMapper::associationToAssociationDto).toList();
     }
 
-    @NotNull
+    
     @Override
-    public SaResponse update(@NotNull AssociationDto associationDto) {
-        Association association = getEntity(associationDto.id());
-        association.setName(associationDto.name());
-        if (associationDto.headAssociationId() == null) {
+    public SaResponse update( AssociationDto dto) {
+        Association association = getEntity(dto.id());
+        association.setName(dto.name());
+        if (dto.headAssociationId() == null) {
             association.setType(AssociationType.MAIN);
         } else {
-            Association headAssociation = getEntity(associationDto.headAssociationId());
+            Association headAssociation = getEntity(dto.headAssociationId());
             association.setHeadAssociation(headAssociation);
             association.setType(AssociationType.SUB);
         }
-        if (!Objects.equals(association.getUniversity().getId(), associationDto.universityId())) {
-            University university = universityService.getEntity(associationDto.universityId());
+        if (!Objects.equals(association.getUniversity().getId(), dto.universityId())) {
+            University university = universityService.getEntity(dto.universityId());
             association.setUniversity(university);
         }
         association = associationRepository.save(association);

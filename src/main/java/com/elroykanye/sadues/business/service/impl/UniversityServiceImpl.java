@@ -10,7 +10,7 @@ import com.elroykanye.sadues.data.entity.AcademicYear;
 import com.elroykanye.sadues.data.entity.University;
 import com.elroykanye.sadues.data.repository.UniversityRepository;
 import lombok.RequiredArgsConstructor;
-import org.jetbrains.annotations.NotNull;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,12 +23,12 @@ public class UniversityServiceImpl implements UniversityService {
     private final UniversityMapper universityMapper;
     private final AcademicYearService academicYearService;
 
-    @NotNull
+    
     @Override
-    public SaResponse create(@NotNull UniversityDto universityDto) {
-        University university = universityMapper.universityDtoToUniversity(universityDto);
-        if (universityDto.currentYearId() != null) {
-            AcademicYear academicYear = academicYearService.getEntity(universityDto.currentYearId());
+    public SaResponse create( UniversityDto dto) {
+        University university = universityMapper.universityDtoToUniversity(dto);
+        if (dto.currentYearId() != null) {
+            AcademicYear academicYear = academicYearService.getEntity(dto.currentYearId());
             university.setCurrentYear(academicYear);
         }
         university.setId(null);
@@ -37,43 +37,43 @@ public class UniversityServiceImpl implements UniversityService {
         return new SaResponse(university.getId(), ResponseMessage.SUCCESS.created(entityName));
     }
 
-    @NotNull
+    
     @Override
     public University getEntity(long id) {
         return universityRepository.findById(id).orElseThrow();
     }
 
-    @NotNull
+    
     @Override
     public UniversityDto getDto(long id) {
         return universityMapper.universityToUniversityDto(getEntity(id));
     }
 
-    @NotNull
+    
     @Override
     public List<University> getAllEntities() {
         return universityRepository.findAll();
     }
 
-    @NotNull
+    
     @Override
     public List<UniversityDto> getAllDto() {
         return getAllEntities().stream().map(universityMapper::universityToUniversityDto).toList();
     }
 
-    @NotNull
+    
     @Override
-    public SaResponse update(@NotNull UniversityDto universityDto) {
-        University university = getEntity(universityDto.id());
-        if (universityDto.currentYearId() != null) {
-            AcademicYear academicYear = academicYearService.getEntity(universityDto.currentYearId());
+    public SaResponse update( UniversityDto dto) {
+        University university = getEntity(dto.id());
+        if (dto.currentYearId() != null) {
+            AcademicYear academicYear = academicYearService.getEntity(dto.currentYearId());
             university.setCurrentYear(academicYear);
             System.out.println(university);
         }
 
-        university.setApproved(universityDto.approved() != null && universityDto.approved());
-        university.setLocation(universityDto.location());
-        university.setName(universityDto.name());
+        university.setApproved(dto.approved() != null && dto.approved());
+        university.setLocation(dto.location());
+        university.setName(dto.name());
 
         university = universityRepository.save(university);
         return new SaResponse(university.getId(), ResponseMessage.SUCCESS.updated(entityName));

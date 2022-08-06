@@ -16,7 +16,7 @@ import com.elroykanye.sadues.data.entity.relation.Member;
 import com.elroykanye.sadues.data.enums.Position;
 import com.elroykanye.sadues.data.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
-import org.jetbrains.annotations.NotNull;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,16 +31,16 @@ public class MemberServiceImpl implements MemberService {
     private final AssociationService associationService;
     private final UserService userService;
 
-    @NotNull
+    
     @Override
-    public SaResponse create(@NotNull MemberDto memberDto) {
-        Member member = memberMapper.memberDtoToMember(memberDto);
-        Association association = associationService.getEntity(memberDto.key().associationId());
-        User user = userService.getEntity(memberDto.key().userId());
+    public SaResponse create( MemberDto dto) {
+        Member member = memberMapper.memberDtoToMember(dto);
+        Association association = associationService.getEntity(dto.key().associationId());
+        User user = userService.getEntity(dto.key().userId());
 
         member.setAssociation(association);
         member.setUser(user);
-        member.setPosition(memberDto.position() == null ? Position.MEMBER : memberDto.position());
+        member.setPosition(dto.position() == null ? Position.MEMBER : dto.position());
         member.setJoinedYear(association.getUniversity().getCurrentYear().getName()); // todo impl functionality for retrieving current year name
         member.setKey(new MemberKey(user.getId(), association.getId()));
         member = memberRepository.save(member);
@@ -49,43 +49,43 @@ public class MemberServiceImpl implements MemberService {
 
 
 
-    @NotNull
+    
     @Override
     public Member getEntity(long userId, long associationId) {
         MemberKey key = new MemberKey(userId, associationId);
         return memberRepository.findById(key).orElseThrow();
     }
 
-    @NotNull
+    
     @Override
     public MemberDto getDto(long userId, long associationId) {
         return memberMapper.memberToMemberDto(getEntity(userId, associationId));
     }
 
-    @NotNull
+    
     @Override
     public List<Member> getAllEntities() {
         return memberRepository.findAll();
     }
 
-    @NotNull
+    
     @Override
     public List<MemberDto> getAllDto() {
         return getAllEntities().stream().map(memberMapper::memberToMemberDto).toList();
     }
 
-    @NotNull
+    
     @Override
-    public SaResponse update(@NotNull MemberDto memberDto) {
-        Member member = getEntity(memberDto.key().userId(), memberDto.key().associationId());
+    public SaResponse update( MemberDto dto) {
+        Member member = getEntity(dto.key().userId(), dto.key().associationId());
 
         member.setPosition(member.getPosition());
-        if (!Objects.equals(member.getAssociation().getId(), memberDto.key().associationId())) {
-            Association association = associationService.getEntity(memberDto.key().associationId());
+        if (!Objects.equals(member.getAssociation().getId(), dto.key().associationId())) {
+            Association association = associationService.getEntity(dto.key().associationId());
             member.setAssociation(association);
         }
-        if (!Objects.equals(member.getUser().getId(), memberDto.key().userId())) {
-            User user = userService.getEntity(memberDto.key().userId());
+        if (!Objects.equals(member.getUser().getId(), dto.key().userId())) {
+            User user = userService.getEntity(dto.key().userId());
             member.setUser(user);
         }
 
