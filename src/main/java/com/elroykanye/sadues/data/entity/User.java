@@ -29,10 +29,10 @@ import java.util.Set;
 @Table(name = "user")
 public class User {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) private Long id;
-    @Column(name = "name", nullable = false) private String name;
-    @Column(name = "reg_no", unique = true, nullable = false) private String regNo;
-    @Column(name = "password", nullable = false) private String password;
-    @Column(name = "email") private String email;
+    @Column(nullable = false) private String name;
+    @Column(unique = true, nullable = false) private String regNo;
+    @Column(nullable = false) private String password;
+    @Column private String email;
 
     @Enumerated(EnumType.STRING) @Column(name = "gender", nullable = false) private Gender gender;
 

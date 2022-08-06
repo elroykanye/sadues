@@ -14,6 +14,6 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class MemberKey implements Serializable {
     @Serial private static final long serialVersionUID = -217769896022933114L;
-    @Column(name = "user_id") @Getter Long userId;
-    @Column(name = "association_id") @Getter Long associationId;
+    @Column @Getter Long userId;
+    @Column @Getter Long associationId;
 }

@@ -28,9 +28,9 @@ import java.util.List;
 @Table(name = "university")
 public class University {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY) private Long id;
-	@Column(name = "name", nullable = false, unique = true) private String name;
-	@Column(name = "location") private String location;
-	@Column(name = "approved") private Boolean approved;
+	@Column(nullable = false, unique = true) private String name;
+	@Column private String location;
+	@Column private Boolean approved;
 
 	@OneToMany(mappedBy = "university", cascade = CascadeType.ALL, orphanRemoval = true)
 	@ToString.Exclude

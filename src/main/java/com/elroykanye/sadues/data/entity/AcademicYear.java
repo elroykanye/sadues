@@ -27,7 +27,7 @@ import java.util.List;
 @Table(name = "academic_year")
 public class AcademicYear {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY) private Long id;
-	@Column(name = "name", nullable = false) private String name;
+	@Column( nullable = false) private String name;
 
 	@OneToMany(mappedBy = "academicYear", cascade = CascadeType.ALL, orphanRemoval = true)
 	@ToString.Exclude

@@ -18,7 +18,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import java.sql.Date;
+import java.util.Date;
 
 @Entity
 @Getter
@@ -29,10 +29,9 @@ import java.sql.Date;
 @Table(name = "dues_payment")
 public class DuesPayment {
      @Id @GeneratedValue(strategy = GenerationType.IDENTITY) private Long id;
-     @Column(name = "amount", nullable = false) private Double amount;
-     @Column(name = "date", nullable = false) private Date date;
-     @Enumerated @Column(name = "status", nullable = false) private PaymentStatus status;
-
+     @Column(nullable = false) private Double amount;
+     @Column(nullable = false) private Date date;
+     @Enumerated @Column(nullable = false) private PaymentStatus status;
 
      @ManyToOne(optional = false)
      @JoinColumns({
