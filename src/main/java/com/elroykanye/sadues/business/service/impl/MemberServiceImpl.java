@@ -19,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -37,13 +38,26 @@ public class MemberServiceImpl implements MemberService {
         Member member = memberMapper.memberDtoToMember(dto);
         Association association = associationService.getEntity(dto.key().associationId());
         User user = userService.getEntity(dto.key().userId());
+        AcademicYear currentYear = association.getUniversity().getCurrentYear();
 
         member.setAssociation(association);
         member.setUser(user);
         member.setPosition(dto.position() == null ? Position.MEMBER : dto.position());
-        member.setJoinedYear(association.getUniversity().getCurrentYear().getName()); // todo impl functionality for retrieving current year name
+        member.setJoinedYear(currentYear.getName()); // todo impl functionality for retrieving current year name
         member.setKey(new MemberKey(user.getId(), association.getId()));
         member = memberRepository.save(member);
+
+        var memberships = new ArrayList<Member>();
+        var currAssoc = association;
+        while (currAssoc.getHeadAssociation() != null) {
+            Association headAssoc = currAssoc.getHeadAssociation();
+            MemberKey memberKey = new MemberKey(user.getId(), headAssoc.getId());
+            Member membership = new Member(memberKey, currentYear.getName(), Position.MEMBER, new ArrayList<>(), user, headAssoc);
+            memberships.add(membership);
+            currAssoc = headAssoc;
+        }
+        memberRepository.saveAll(memberships);
+
         return new SaResponse(member.getKey(), ResponseMessage.SUCCESS.created(entityName));
     }
 
@@ -51,15 +65,15 @@ public class MemberServiceImpl implements MemberService {
 
     
     @Override
-    public Member getEntity(long userId, long associationId) {
-        MemberKey key = new MemberKey(userId, associationId);
+    public Member getEntity(MemberDto.MemberKeyDto keyDto) {
+        MemberKey key = new MemberKey(keyDto.userId(), keyDto.associationId());
         return memberRepository.findById(key).orElseThrow();
     }
 
     
     @Override
-    public MemberDto getDto(long userId, long associationId) {
-        return memberMapper.memberToMemberDto(getEntity(userId, associationId));
+    public MemberDto getDto(MemberDto.MemberKeyDto keyDto) {
+        return memberMapper.memberToMemberDto(getEntity(keyDto));
     }
 
     
@@ -77,7 +91,7 @@ public class MemberServiceImpl implements MemberService {
     
     @Override
     public SaResponse update( MemberDto dto) {
-        Member member = getEntity(dto.key().userId(), dto.key().associationId());
+        Member member = getEntity(dto.key());
 
         member.setPosition(member.getPosition());
         if (!Objects.equals(member.getAssociation().getId(), dto.key().associationId())) {
@@ -94,8 +108,8 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public void delete(long userId, long associationId) {
-        Member member = getEntity(userId, associationId);
+    public void delete(MemberDto.MemberKeyDto keyDto) {
+        Member member = getEntity(keyDto);
         memberRepository.delete(member);
     }
 }

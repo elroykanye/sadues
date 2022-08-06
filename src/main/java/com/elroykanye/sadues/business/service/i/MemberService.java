@@ -11,10 +11,10 @@ public interface MemberService {
     SaResponse create( MemberDto dto);
 
     
-    Member getEntity(long userId, long associationId);
+    Member getEntity(MemberDto.MemberKeyDto keyDto);
 
     
-    MemberDto getDto(long var1, long var3);
+    MemberDto getDto(MemberDto.MemberKeyDto keyDto);
 
     
     List<Member> getAllEntities();
@@ -25,5 +25,5 @@ public interface MemberService {
     
     SaResponse update( MemberDto dto);
 
-    void delete(long userId, long associationId);
+    void delete(MemberDto.MemberKeyDto keyDto);
 }

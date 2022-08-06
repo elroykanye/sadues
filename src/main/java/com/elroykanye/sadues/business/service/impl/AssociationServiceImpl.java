@@ -51,7 +51,7 @@ public class AssociationServiceImpl implements AssociationService {
         } else {
             Association headAssociation = getEntity(dto.headAssociationId());
             association.setHeadAssociation(headAssociation);
-            association.setType(AssociationType.SUB);
+            association.setType(dto.type() == null ? AssociationType.MAIN : dto.type());
         }
 
         association = associationRepository.save(association);
