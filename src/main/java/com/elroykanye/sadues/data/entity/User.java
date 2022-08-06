@@ -1,6 +1,6 @@
 package com.elroykanye.sadues.data.entity;
 
-import com.elroykanye.sadues.data.entity.relation.Member;
+import com.elroykanye.sadues.data.entity.relation.Membership;
 import com.elroykanye.sadues.data.enums.Gender;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -38,6 +38,6 @@ public class User {
 
     @OneToMany(mappedBy = "user", orphanRemoval = true)
     @ToString.Exclude
-    private Set<Member> members = new LinkedHashSet<>();
+    private Set<Membership> memberships = new LinkedHashSet<>();
 
 }

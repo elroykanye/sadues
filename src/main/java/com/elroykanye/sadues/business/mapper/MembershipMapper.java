@@ -1,9 +1,9 @@
 package com.elroykanye.sadues.business.mapper;
 
-import com.elroykanye.sadues.api.dto.MemberDto;
+import com.elroykanye.sadues.api.dto.MembershipDto;
 import com.elroykanye.sadues.data.entity.Association;
-import com.elroykanye.sadues.data.entity.composite.MemberKey;
-import com.elroykanye.sadues.data.entity.relation.Member;
+import com.elroykanye.sadues.data.entity.composite.MembershipKey;
+import com.elroykanye.sadues.data.entity.relation.Membership;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -15,25 +15,25 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = "spring")
-public interface MemberMapper {
+public interface MembershipMapper {
     @Mapping(target = "key", expression = "java(mapKey(memberDto.key()))")
-    Member memberDtoToMember(MemberDto memberDto);
+    Membership memberDtoToMember(MembershipDto membershipDto);
 
     @Mapping(target = "key", expression = "java(inverseMapKey(member.getKey()))")
-    MemberDto memberToMemberDto(Member member);
+    MembershipDto memberToMemberDto(Membership membership);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    Member updateMemberFromMemberDto(MemberDto memberDto, @MappingTarget Member member);
+    Membership updateMemberFromMemberDto(MembershipDto membershipDto, @MappingTarget Membership membership);
 
     default Set<Long> associationsToAssociationIds(Set<Association> associations) {
         return associations.stream().map(Association::getId).collect(Collectors.toSet());
     }
 
-    default MemberKey mapKey(MemberDto.MemberKeyDto keyDto) {
-        return new MemberKey(keyDto.userId(), keyDto.associationId());
+    default MembershipKey mapKey(MembershipDto.MemberKeyDto keyDto) {
+        return new MembershipKey(keyDto.userId(), keyDto.associationId());
     }
 
-    default MemberDto.MemberKeyDto inverseMapKey(MemberKey key) {
-        return new MemberDto.MemberKeyDto(key.getUserId(), key.getAssociationId());
+    default MembershipDto.MemberKeyDto inverseMapKey(MembershipKey key) {
+        return new MembershipDto.MemberKeyDto(key.getUserId(), key.getAssociationId());
     }
 }

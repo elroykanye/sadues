@@ -1,9 +1,8 @@
 package com.elroykanye.sadues.data.entity.relation;
 
-import com.elroykanye.sadues.data.entity.AcademicYear;
 import com.elroykanye.sadues.data.entity.Association;
 import com.elroykanye.sadues.data.entity.User;
-import com.elroykanye.sadues.data.entity.composite.MemberKey;
+import com.elroykanye.sadues.data.entity.composite.MembershipKey;
 import com.elroykanye.sadues.data.entity.DuesPayment;
 import com.elroykanye.sadues.data.enums.Position;
 import lombok.AllArgsConstructor;
@@ -21,7 +20,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,12 +31,12 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "member")
-public class Member {
-	@EmbeddedId private MemberKey key;
+public class Membership {
+	@EmbeddedId private MembershipKey key;
 	@Column(name = "joined_year", nullable = false) private String joinedYear;
 	@Enumerated(EnumType.STRING) @Column(name = "position", nullable = false) private Position position;
 	
-	@OneToMany(mappedBy = "member", orphanRemoval = true)
+	@OneToMany(mappedBy = "membership", orphanRemoval = true)
 	@ToString.Exclude
 	private List<DuesPayment> duesPayments = new ArrayList<>();
 

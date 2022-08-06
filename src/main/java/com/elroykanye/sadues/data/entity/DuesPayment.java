@@ -1,6 +1,6 @@
 package com.elroykanye.sadues.data.entity;
 
-import com.elroykanye.sadues.data.entity.relation.Member;
+import com.elroykanye.sadues.data.entity.relation.Membership;
 import com.elroykanye.sadues.data.enums.PaymentStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -38,6 +38,6 @@ public class DuesPayment {
              @JoinColumn(name = "MEMBER_USER_ID", referencedColumnName = "USER_ID", nullable = false),
              @JoinColumn(name = "MEMBER_ASSOCIATION_ID", referencedColumnName = "ASSOCIATION_ID", nullable = false)
      })
-     private Member member;
+     private Membership membership;
 
 }

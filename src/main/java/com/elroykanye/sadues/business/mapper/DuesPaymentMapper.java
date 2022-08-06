@@ -1,10 +1,10 @@
 package com.elroykanye.sadues.business.mapper;
 
 import com.elroykanye.sadues.api.dto.DuesPaymentDto;
-import com.elroykanye.sadues.api.dto.MemberDto;
+import com.elroykanye.sadues.api.dto.MembershipDto;
 import com.elroykanye.sadues.data.entity.Association;
 import com.elroykanye.sadues.data.entity.DuesPayment;
-import com.elroykanye.sadues.data.entity.composite.MemberKey;
+import com.elroykanye.sadues.data.entity.composite.MembershipKey;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -31,7 +31,7 @@ public interface DuesPaymentMapper {
         return associations.stream().map(Association::getId).collect(Collectors.toSet());
     }
 
-    default MemberDto.MemberKeyDto mapMemberKey(MemberKey key) {
-        return new MemberDto.MemberKeyDto(key.getUserId(), key.getAssociationId());
+    default MembershipDto.MemberKeyDto mapMemberKey(MembershipKey key) {
+        return new MembershipDto.MemberKeyDto(key.getUserId(), key.getAssociationId());
     }
 }

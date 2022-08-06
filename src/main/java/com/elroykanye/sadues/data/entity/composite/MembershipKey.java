@@ -12,7 +12,7 @@ import java.io.Serializable;
 @Embeddable
 @NoArgsConstructor
 @AllArgsConstructor
-public class MemberKey implements Serializable {
+public class MembershipKey implements Serializable {
     @Serial private static final long serialVersionUID = -217769896022933114L;
     @Column @Getter Long userId;
     @Column @Getter Long associationId;

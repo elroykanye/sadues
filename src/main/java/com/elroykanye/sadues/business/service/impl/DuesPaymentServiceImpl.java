@@ -6,13 +6,13 @@ import com.elroykanye.sadues.api.dto.response.SaResponse;
 import com.elroykanye.sadues.business.mapper.DuesPaymentMapper;
 import com.elroykanye.sadues.business.service.i.DuesInfoService;
 import com.elroykanye.sadues.business.service.i.DuesPaymentService;
-import com.elroykanye.sadues.business.service.i.MemberService;
+import com.elroykanye.sadues.business.service.i.MembershipService;
 import com.elroykanye.sadues.config.constants.EntityName;
 import com.elroykanye.sadues.config.constants.ResponseMessage;
 import com.elroykanye.sadues.data.entity.AcademicYear;
 import com.elroykanye.sadues.data.entity.DuesPayment;
 import com.elroykanye.sadues.data.entity.relation.DuesInfo;
-import com.elroykanye.sadues.data.entity.relation.Member;
+import com.elroykanye.sadues.data.entity.relation.Membership;
 import com.elroykanye.sadues.data.enums.PaymentStatus;
 import com.elroykanye.sadues.data.repository.DuesPaymentRepository;
 import lombok.RequiredArgsConstructor;
@@ -28,12 +28,12 @@ public class DuesPaymentServiceImpl implements DuesPaymentService {
     private final String entityName = EntityName.DUES_PAYMENT;
     private final DuesPaymentRepository duesPaymentRepository;
     private final DuesPaymentMapper duesPaymentMapper;
-    private final MemberService memberService;
+    private final MembershipService membershipService;
     private final DuesInfoService duesInfoService;
 
     public void checkDuesPayment(DuesPaymentDto dto) {
-        Member member = memberService.getEntity(dto.memberKey());
-        AcademicYear currentAcademicYear = member.getAssociation().getUniversity().getCurrentYear();
+        Membership membership = membershipService.getEntity(dto.memberKey());
+        AcademicYear currentAcademicYear = membership.getAssociation().getUniversity().getCurrentYear();
         DuesInfo duesInfo = duesInfoService.getEntity(
                 new DuesInfoDto.DuesInfoKeyDto(currentAcademicYear.getId(), dto.associationId())
         );
@@ -42,8 +42,8 @@ public class DuesPaymentServiceImpl implements DuesPaymentService {
         final Double toPayAmount = dto.amount();
         final Double[] paidAmount = {0D};
 
-        member.getDuesPayments().stream().filter(
-                duesPayment -> Objects.equals(duesPayment.getMember().getAssociation().getId(), dto.associationId())
+        membership.getDuesPayments().stream().filter(
+                duesPayment -> Objects.equals(duesPayment.getMembership().getAssociation().getId(), dto.associationId())
         ).forEach(duesPayment -> paidAmount[0] = paidAmount[0] + duesPayment.getAmount());
 
 
@@ -65,10 +65,10 @@ public class DuesPaymentServiceImpl implements DuesPaymentService {
     public SaResponse create(DuesPaymentDto dto) {
         checkDuesPayment(dto);
 
-        Member member = memberService.getEntity(dto.memberKey());
+        Membership membership = membershipService.getEntity(dto.memberKey());
         DuesPayment duesPayment = duesPaymentMapper.duesPaymentDtoToDuesPayment(dto);
 
-        duesPayment.setMember(member);
+        duesPayment.setMembership(membership);
         duesPayment.setDate(new Date());
         duesPayment.setStatus(PaymentStatus.PENDING);
         duesPayment = duesPaymentRepository.save(duesPayment);

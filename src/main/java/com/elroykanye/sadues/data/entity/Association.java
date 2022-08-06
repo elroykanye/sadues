@@ -1,7 +1,7 @@
 package com.elroykanye.sadues.data.entity;
 
 import com.elroykanye.sadues.data.entity.relation.DuesInfo;
-import com.elroykanye.sadues.data.entity.relation.Member;
+import com.elroykanye.sadues.data.entity.relation.Membership;
 import com.elroykanye.sadues.data.enums.AssociationType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -39,7 +39,7 @@ public class Association {
 
     @OneToMany(mappedBy = "association", orphanRemoval = true)
     @ToString.Exclude @Builder.Default
-    private Set<Member> members = new LinkedHashSet<>();
+    private Set<Membership> memberships = new LinkedHashSet<>();
 
     @ManyToOne
     @JoinColumn(name = "head_association_id")
