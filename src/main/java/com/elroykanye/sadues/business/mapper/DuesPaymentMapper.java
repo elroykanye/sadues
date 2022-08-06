@@ -17,13 +17,13 @@ import java.util.stream.Collectors;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = "spring")
 public interface DuesPaymentMapper {
-    @Mapping(target = "member", ignore = true)
+    @Mapping(target = "membership", ignore = true)
     DuesPayment duesPaymentDtoToDuesPayment(DuesPaymentDto duesPaymentDto);
 
-    @Mapping(target = "memberKey", expression = "java(mapMemberKey(duesPayment.getMember().getKey()))")
+    @Mapping(target = "membershipKey", expression = "java(mapMemberKey(duesPayment.getMembership().getKey()))")
     DuesPaymentDto duesPaymentToDuesPaymentDto(DuesPayment duesPayment);
 
-    @Mapping(target = "member", ignore = true)
+    @Mapping(target = "membership", ignore = true)
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     DuesPayment updateDuesPaymentFromDuesPaymentDto(DuesPaymentDto duesPaymentDto, @MappingTarget DuesPayment duesPayment);
 
@@ -31,7 +31,7 @@ public interface DuesPaymentMapper {
         return associations.stream().map(Association::getId).collect(Collectors.toSet());
     }
 
-    default MembershipDto.MemberKeyDto mapMemberKey(MembershipKey key) {
-        return new MembershipDto.MemberKeyDto(key.getUserId(), key.getAssociationId());
+    default MembershipDto.MembershipKeyDto mapMemberKey(MembershipKey key) {
+        return new MembershipDto.MembershipKeyDto(key.getUserId(), key.getAssociationId());
     }
 }

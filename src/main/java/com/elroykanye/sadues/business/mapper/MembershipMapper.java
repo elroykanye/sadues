@@ -16,10 +16,10 @@ import java.util.stream.Collectors;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = "spring")
 public interface MembershipMapper {
-    @Mapping(target = "key", expression = "java(mapKey(memberDto.key()))")
+    @Mapping(target = "key", expression = "java(mapKey(membershipDto.key()))")
     Membership memberDtoToMember(MembershipDto membershipDto);
 
-    @Mapping(target = "key", expression = "java(inverseMapKey(member.getKey()))")
+    @Mapping(target = "key", expression = "java(inverseMapKey(membership.getKey()))")
     MembershipDto memberToMemberDto(Membership membership);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
@@ -29,11 +29,11 @@ public interface MembershipMapper {
         return associations.stream().map(Association::getId).collect(Collectors.toSet());
     }
 
-    default MembershipKey mapKey(MembershipDto.MemberKeyDto keyDto) {
+    default MembershipKey mapKey(MembershipDto.MembershipKeyDto keyDto) {
         return new MembershipKey(keyDto.userId(), keyDto.associationId());
     }
 
-    default MembershipDto.MemberKeyDto inverseMapKey(MembershipKey key) {
-        return new MembershipDto.MemberKeyDto(key.getUserId(), key.getAssociationId());
+    default MembershipDto.MembershipKeyDto inverseMapKey(MembershipKey key) {
+        return new MembershipDto.MembershipKeyDto(key.getUserId(), key.getAssociationId());
     }
 }

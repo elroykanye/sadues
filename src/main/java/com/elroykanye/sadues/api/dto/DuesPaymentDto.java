@@ -13,5 +13,5 @@ public record DuesPaymentDto(
         Date date,
         PaymentStatus status,
         @NotNull Long associationId,
-        @NotNull MembershipDto.MemberKeyDto memberKey
+        @NotNull MembershipDto.MembershipKeyDto membershipKey
 ) implements Serializable { }

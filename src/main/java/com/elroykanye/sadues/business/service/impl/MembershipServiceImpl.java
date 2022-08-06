@@ -64,14 +64,14 @@ public class MembershipServiceImpl implements MembershipService {
 
     
     @Override
-    public Membership getEntity(MembershipDto.MemberKeyDto keyDto) {
+    public Membership getEntity(MembershipDto.MembershipKeyDto keyDto) {
         MembershipKey key = new MembershipKey(keyDto.userId(), keyDto.associationId());
         return membershipRepository.findById(key).orElseThrow();
     }
 
     
     @Override
-    public MembershipDto getDto(MembershipDto.MemberKeyDto keyDto) {
+    public MembershipDto getDto(MembershipDto.MembershipKeyDto keyDto) {
         return membershipMapper.memberToMemberDto(getEntity(keyDto));
     }
 
@@ -107,7 +107,7 @@ public class MembershipServiceImpl implements MembershipService {
     }
 
     @Override
-    public void delete(MembershipDto.MemberKeyDto keyDto) {
+    public void delete(MembershipDto.MembershipKeyDto keyDto) {
         Membership membership = getEntity(keyDto);
         membershipRepository.delete(membership);
     }

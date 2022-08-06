@@ -11,10 +11,10 @@ public interface MembershipService {
     SaResponse create( MembershipDto dto);
 
     
-    Membership getEntity(MembershipDto.MemberKeyDto keyDto);
+    Membership getEntity(MembershipDto.MembershipKeyDto keyDto);
 
     
-    MembershipDto getDto(MembershipDto.MemberKeyDto keyDto);
+    MembershipDto getDto(MembershipDto.MembershipKeyDto keyDto);
 
     
     List<Membership> getAllEntities();
@@ -25,5 +25,5 @@ public interface MembershipService {
     
     SaResponse update( MembershipDto dto);
 
-    void delete(MembershipDto.MemberKeyDto keyDto);
+    void delete(MembershipDto.MembershipKeyDto keyDto);
 }

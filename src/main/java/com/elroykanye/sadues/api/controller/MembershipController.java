@@ -34,7 +34,7 @@ public class MembershipController {
 
     @GetMapping("/key")
     public ResponseEntity<MembershipDto> get(@RequestParam("userId") Long userId, @RequestParam("associationId") Long associationId) {
-        MembershipDto.MemberKeyDto keyDto = new MembershipDto.MemberKeyDto(userId, associationId);
+        MembershipDto.MembershipKeyDto keyDto = new MembershipDto.MembershipKeyDto(userId, associationId);
         return ResponseEntity.ok(membershipService.getDto(keyDto));
     }
 
@@ -50,7 +50,7 @@ public class MembershipController {
 
     @DeleteMapping("/key")
     public ResponseEntity<Void> delete(@RequestParam("userId") Long userId, @RequestParam("associationId") Long associationId) {
-        MembershipDto.MemberKeyDto keyDto = new MembershipDto.MemberKeyDto(userId, associationId);
+        MembershipDto.MembershipKeyDto keyDto = new MembershipDto.MembershipKeyDto(userId, associationId);
         membershipService.delete(keyDto);
         return ResponseEntity.noContent().build();
     }

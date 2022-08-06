@@ -32,7 +32,7 @@ public class DuesPaymentServiceImpl implements DuesPaymentService {
     private final DuesInfoService duesInfoService;
 
     public void checkDuesPayment(DuesPaymentDto dto) {
-        Membership membership = membershipService.getEntity(dto.memberKey());
+        Membership membership = membershipService.getEntity(dto.membershipKey());
         AcademicYear currentAcademicYear = membership.getAssociation().getUniversity().getCurrentYear();
         DuesInfo duesInfo = duesInfoService.getEntity(
                 new DuesInfoDto.DuesInfoKeyDto(currentAcademicYear.getId(), dto.associationId())
@@ -65,7 +65,7 @@ public class DuesPaymentServiceImpl implements DuesPaymentService {
     public SaResponse create(DuesPaymentDto dto) {
         checkDuesPayment(dto);
 
-        Membership membership = membershipService.getEntity(dto.memberKey());
+        Membership membership = membershipService.getEntity(dto.membershipKey());
         DuesPayment duesPayment = duesPaymentMapper.duesPaymentDtoToDuesPayment(dto);
 
         duesPayment.setMembership(membership);
