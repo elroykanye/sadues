@@ -6,8 +6,8 @@
   </div>
   <div class="bg-teal-50 border-round w-full flex align-self-center justify-content-center">
     <form [formGroup]="registerForm" (submit)="registerAction()" class="w-8 lg:w-6 py-4 lg:py-6">
-      <label for="username" class="block text-700 font-medium mb-2">Email</label>
-      <input id="username" pInputText class="w-full mb-3" placeholder="john.doe@email.com" [formControlName]="'username'">
+      <label for="email" class="block text-700 font-medium mb-2">Email</label>
+      <input id="email" pInputText class="w-full mb-3" placeholder="john.doe@email.com" [formControlName]="'email'">
 
       <label for="password" class="block text-700 font-medium mb-2">Password</label>
       <input id="password" pPassword class="w-full mb-3" [formControlName]="'password'">
@@ -20,6 +20,14 @@
 
       <label for="name" class="block text-700 font-medium mb-2">Full Name</label>
       <input id="name" pInputText class="w-full mb-3" placeholder="John Doe" [formControlName]="'name'">
+
+      <label for="position" class="block text-900 font-medium mb-2">Position</label>
+      <div class="lg:flex mb-4">
+        <div *ngFor="let gender of genders" class="mb-1">
+          <p-radioButton id="position" [value]="gender" [formControlName]="'gender'"></p-radioButton>
+          <label class="mx-2">{{gender | titlecase}}</label>
+        </div>
+      </div>
 
       <label for="university" class="block text-700 font-medium mb-2">University</label>
       <p-dropdown id="university" [options]="universities" [optionLabel]="'name'" [optionValue]="'id'"
