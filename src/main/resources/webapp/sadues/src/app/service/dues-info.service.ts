@@ -1,9 +1,9 @@
 import {Inject, Injectable} from '@angular/core';
-import {DUES_INFO_API_URL} from "../app.injectables";
 import {HttpClient} from "@angular/common/http";
 import {DuesInfo} from "../model/dues-info.model";
 import {Observable} from "rxjs";
 import {SaResponse} from "../model/response/sa-response";
+import {DUES_INFO_API_URL} from "../app.constants";
 
 @Injectable({
   providedIn: 'root'

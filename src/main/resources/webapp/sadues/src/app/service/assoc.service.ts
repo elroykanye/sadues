@@ -1,9 +1,9 @@
 import {Inject, Injectable} from '@angular/core';
-import {ASSOC_API_URL} from "../app.injectables";
 import {HttpClient} from "@angular/common/http";
 import {Assoc} from "../model/assoc.model";
 import {Observable} from "rxjs";
 import {SaResponse} from "../model/response/sa-response";
+import {ASSOC_API_URL} from "../app.constants";
 
 @Injectable({
   providedIn: 'root'

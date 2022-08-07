@@ -1,9 +1,9 @@
 import {Inject, Injectable} from '@angular/core';
-import {UNIVERSITY_API_URL} from "../app.injectables";
 import {HttpClient} from "@angular/common/http";
 import {University} from "../model/university.model";
 import {Observable} from "rxjs";
 import {SaResponse} from "../model/response/sa-response";
+import {UNIVERSITY_API_URL} from "../app.constants";
 
 @Injectable({
   providedIn: 'root'

@@ -1,9 +1,9 @@
 import {Inject, Injectable} from '@angular/core';
-import {MEMBERSHIP_API_URL} from "../app.injectables";
 import {HttpClient} from "@angular/common/http";
 import {Membership} from "../model/membership.model";
 import {Observable} from "rxjs";
 import {SaResponse} from "../model/response/sa-response";
+import {MEMBERSHIP_API_URL} from "../app.constants";
 
 @Injectable({
   providedIn: 'root'

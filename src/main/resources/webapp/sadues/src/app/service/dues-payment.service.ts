@@ -1,9 +1,9 @@
 import {Inject, Injectable} from '@angular/core';
-import {DUES_PAYMENT_API_URL} from "../app.injectables";
 import {HttpClient} from "@angular/common/http";
 import {DuesPayment} from "../model/dues-payment.model";
 import {Observable} from "rxjs";
 import {SaResponse} from "../model/response/sa-response";
+import {DUES_PAYMENT_API_URL} from "../app.constants";
 
 @Injectable({
   providedIn: 'root'
