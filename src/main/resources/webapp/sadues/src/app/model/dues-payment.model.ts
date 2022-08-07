@@ -6,7 +6,7 @@ export class DuesPayment {
     public amount: number,
     public date: Date,
     public status: PaymentStatus,
-    membershipKey: MembershipKey
+    public membershipKey: MembershipKey
   ) {
   }
 }

@@ -3,8 +3,7 @@ export class Membership {
     public key: MembershipKey,
     public position: Position,
     public joinYear?: string
-  ) {
-  }
+  ) {}
 }
 
 export class MembershipKey {
