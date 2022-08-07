@@ -9,9 +9,17 @@ import java.io.Serializable;
 
 public record UserDto(
         Long id,
-
         @NotEmpty @Email String email,
         @NotEmpty String regNo,
         @NotEmpty String name, Role role,
         Gender gender) implements Serializable {
+
+    public record UserLogin(@NotEmpty @Email String email, @NotEmpty String password) implements Serializable {
+    }
+
+    public record UserRegister(
+            @NotEmpty @Email String email,
+            @NotEmpty  String password,
+            UserDto user
+    ) implements Serializable {}
 }
