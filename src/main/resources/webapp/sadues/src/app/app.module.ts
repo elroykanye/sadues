@@ -14,6 +14,16 @@ import { AccountComponent } from './component/dashboard/account/account.componen
 import { HomeComponent } from './component/dashboard/home/home.component';
 import {DropdownModule} from "primeng/dropdown";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import { HeaderComponent } from './component/nav/header/header.component';
+import { FooterComponent } from './component/nav/footer/footer.component';
+import {TabMenuModule} from "primeng/tabmenu";
+import { PayDuesComponent } from './component/dashboard/pay-dues/pay-dues.component';
+import {RippleModule} from "primeng/ripple";
+import {DividerModule} from "primeng/divider";
+import {PanelModule} from "primeng/panel";
+import {RadioButtonModule} from "primeng/radiobutton";
+import {HttpClientModule} from "@angular/common/http";
+import {AuthService} from "./service/auth.service";
 
 @NgModule({
   declarations: [
@@ -21,17 +31,26 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
     LoginComponent,
     RegisterComponent,
     AccountComponent,
-    HomeComponent
+    HomeComponent,
+    HeaderComponent,
+    FooterComponent,
+    PayDuesComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     AppRoutingModule,
+    ReactiveFormsModule,
     InputTextModule,
     PasswordModule,
     ButtonModule,
-    ReactiveFormsModule,
-    DropdownModule
+    DropdownModule,
+    TabMenuModule,
+    RippleModule,
+    DividerModule,
+    PanelModule,
+    RadioButtonModule
   ],
   providers: [
     SERVICE_INJECTABLES
