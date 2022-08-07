@@ -4,6 +4,7 @@ import com.elroykanye.sadues.data.entity.AcademicYear;
 import com.elroykanye.sadues.data.entity.Association;
 import com.elroykanye.sadues.data.entity.composite.DuesInfoKey;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,6 +21,7 @@ import javax.persistence.Table;
 @Entity
 @Getter
 @Setter
+@Builder
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor

@@ -4,6 +4,7 @@ import com.elroykanye.sadues.data.entity.relation.Membership;
 import com.elroykanye.sadues.data.enums.Gender;
 import com.elroykanye.sadues.data.enums.Role;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -24,22 +25,22 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
+@Builder
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "user")
 public class User {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) private Long id;
-    @Column private String email;
+    @Column(unique = true, nullable = false) private String email;
     @Column(unique = true, nullable = false) private String regNo;
     @Column(nullable = false) private String name;
     @Column(nullable = false) private String password;
-    @Column(nullable = false) private Role role;
+    @Enumerated(EnumType.STRING) @Column(nullable = false) private Role role;
 
-    @Enumerated(EnumType.STRING) @Column(name = "gender", nullable = false) private Gender gender;
+    @Enumerated(EnumType.STRING) @Column(nullable = false) private Gender gender;
 
-    @OneToMany(mappedBy = "user", orphanRemoval = true)
-    @ToString.Exclude
+    @OneToMany(mappedBy = "user", orphanRemoval = true) @ToString.Exclude
     private Set<Membership> memberships = new LinkedHashSet<>();
 
 }

@@ -3,6 +3,7 @@ package com.elroykanye.sadues.data.entity;
 import com.elroykanye.sadues.data.entity.relation.Membership;
 import com.elroykanye.sadues.data.enums.PaymentStatus;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,6 +24,7 @@ import java.util.Date;
 @Entity
 @Getter
 @Setter
+@Builder
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor

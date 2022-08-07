@@ -6,6 +6,7 @@ import com.elroykanye.sadues.data.entity.composite.MembershipKey;
 import com.elroykanye.sadues.data.entity.DuesPayment;
 import com.elroykanye.sadues.data.enums.Position;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -27,10 +28,11 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@Builder
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "member")
+@Table()
 public class Membership {
 	@EmbeddedId private MembershipKey key;
 	@Column(name = "joined_year", nullable = false) private String joinedYear;
