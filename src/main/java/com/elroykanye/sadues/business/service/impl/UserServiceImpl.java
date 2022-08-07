@@ -10,6 +10,11 @@ import com.elroykanye.sadues.data.entity.User;
 import com.elroykanye.sadues.data.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,7 +22,7 @@ import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService, UserDetailsService {
     private final String ENTITY_NAME = EntityName.USER;
     private final UserRepository userRepository;
     private final UserMapper userMapper;
@@ -71,5 +76,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public void delete(long id) {
         userRepository.deleteById(id);
+    }
+
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userRepository.findByEmail(username).orElseThrow(
+                () -> new UsernameNotFoundException(String.format("User with usernme '%s' does not exist", username))
+        );
+
+        return org.springframework.security.core.userdetails.User.withUsername(user.getName())
+                .password(user.getPassword()).authorities(user.getRole().name()).build();
     }
 }
