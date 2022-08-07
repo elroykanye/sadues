@@ -1,0 +1,19 @@
+<section class="p-4">
+  <div class="">
+    <p-panel [header]="'Register Into Student Association'" [toggleable]="true">
+      <form [formGroup]="membershipForm">
+        <label for="assoc" class="block text-900 font-medium mb-2">Association</label>
+        <p-dropdown id="assoc" placeholder="Select student association" [options]="associations" [optionLabel]="'name'" [optionValue]="'id'" [styleClass]="'w-full mb-3'" [formControlName]="'assoc'"></p-dropdown>
+
+        <label for="position" class="block text-900 font-medium mb-2">Position</label>
+        <div class="lg:flex mb-4">
+          <div *ngFor="let position of positions" class="mb-1">
+            <p-radioButton id="position" [value]="position" [formControlName]="'position'"></p-radioButton>
+            <label class="mx-2">{{position | titlecase}}</label>
+          </div>
+        </div>
+        <button pButton icon="pi pi-user-plus" label="Register"></button>
+      </form>
+    </p-panel>
+  </div>
+</section>
