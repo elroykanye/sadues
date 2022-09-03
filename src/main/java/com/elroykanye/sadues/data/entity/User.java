@@ -17,6 +17,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.LinkedHashSet;
@@ -42,5 +44,13 @@ public class User {
 
     @OneToMany(mappedBy = "user", orphanRemoval = true) @ToString.Exclude
     private Set<Membership> memberships = new LinkedHashSet<>();
+
+    @ManyToOne()
+    @JoinColumn(name = "university_id")
+    private University university;
+
+    @OneToMany(mappedBy = "creator", orphanRemoval = true)
+    @ToString.Exclude
+    private Set<Association> associations = new LinkedHashSet<>();
 
 }
