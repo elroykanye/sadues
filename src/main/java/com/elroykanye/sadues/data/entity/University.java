@@ -18,7 +18,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -41,5 +43,9 @@ public class University {
 	@OneToOne
 	@JoinColumn(name = "current_academic_year_id")
 	private AcademicYear currentYear;
+
+    @OneToMany(mappedBy = "university")
+	@ToString.Exclude
+	private Set<User> users = new LinkedHashSet<>();
 
 }
