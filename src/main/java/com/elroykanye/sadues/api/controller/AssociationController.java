@@ -38,6 +38,12 @@ public class AssociationController {
         return ResponseEntity.ok(associationService.getDto(id));
     }
 
+    @GetMapping("/uni/{universityId}")
+    public ResponseEntity<List<AssociationDto>> getByUniversity(@PathVariable Long universityId) {
+        return ResponseEntity.ok(associationService.getAllDtoByUniversity(universityId));
+    }
+
+
     @GetMapping
     public ResponseEntity<List<AssociationDto>> getAll() {
         return ResponseEntity.ok(associationService.getAllDto());
