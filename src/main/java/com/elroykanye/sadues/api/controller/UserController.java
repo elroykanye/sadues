@@ -49,7 +49,8 @@ public class UserController {
     }
 
     @PutMapping
-    public ResponseEntity<SaResponse> update(@RequestBody UserDto userDto) {
+    public ResponseEntity<SaResponse> update(@Valid @RequestBody UserDto userDto) {
+        log.info("Updating user {}", userDto.email());
         return ResponseEntity.ok(userService.update(userDto));
     }
 
