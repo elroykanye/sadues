@@ -4,7 +4,8 @@ import java.io.Serializable;
 
 public record ExceptionResponse (
         String message,
-        String path
+        String path,
+        Object errors
 
 ) implements Serializable {
 
