@@ -10,5 +10,5 @@ public record AssociationDto(
         Long id,
         @NotNull String name, AssociationType type,
         @NotNull @Min(value = 1) Long universityId,
-        Long headAssociationId) implements Serializable {
+        Long headAssociationId, Long creatorId) implements Serializable {
 }
