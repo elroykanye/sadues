@@ -49,4 +49,7 @@ public class Association {
     @ToString.Exclude @Builder.Default
     private List<Association> subAssociations = new ArrayList<>();
 
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "creator_id", nullable = false)
+    private User creator;
 }
