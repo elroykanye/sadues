@@ -41,7 +41,7 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.authorizeRequests(auth -> auth
+        httpSecurity.cors().and().csrf().disable().authorizeRequests(auth -> auth
                 .anyRequest().authenticated()
         ).sessionManagement(session -> session
                 .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
