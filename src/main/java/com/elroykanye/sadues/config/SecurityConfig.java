@@ -1,5 +1,6 @@
 package com.elroykanye.sadues.config;
 
+import com.elroykanye.sadues.api.controller.AuthEntryPoint;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -46,7 +47,7 @@ public class SecurityConfig {
                 .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
                 .maximumSessions(1)
                 .maxSessionsPreventsLogin(true)
-        );
+        ).exceptionHandling(httpEx -> httpEx.authenticationEntryPoint(new AuthEntryPoint()));
         return httpSecurity.build();
     }
 
