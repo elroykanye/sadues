@@ -13,6 +13,7 @@ public interface UserService {
     SaResponse create( UserDto dto);
     User getEntity(long id);
     UserDto getDto(long id);
+    UserDto getDtoByEmail(String email);
     List<User> getAllEntities();
     List<UserDto> getAllDto();
     SaResponse update( UserDto dto);
