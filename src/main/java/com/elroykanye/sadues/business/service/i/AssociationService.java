@@ -18,9 +18,9 @@ public interface AssociationService {
     
     List<Association> getAllEntities();
 
-    
-    List<AssociationDto> getAllDto();
+    List<AssociationDto> getAllDtoByUniversity(Long universityId);
 
+    List<AssociationDto> getAllDto();
     
     SaResponse update( AssociationDto dto);
 
