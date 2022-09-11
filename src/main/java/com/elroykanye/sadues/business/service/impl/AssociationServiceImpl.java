@@ -4,10 +4,12 @@ import com.elroykanye.sadues.api.dto.response.SaResponse;
 import com.elroykanye.sadues.business.mapper.AssociationMapper;
 import com.elroykanye.sadues.business.service.i.AssociationService;
 import com.elroykanye.sadues.business.service.i.UniversityService;
+import com.elroykanye.sadues.business.service.i.UserService;
 import com.elroykanye.sadues.config.constants.EntityName;
 import com.elroykanye.sadues.config.constants.ResponseMessage;
 import com.elroykanye.sadues.data.entity.Association;
 import com.elroykanye.sadues.data.entity.University;
+import com.elroykanye.sadues.data.entity.User;
 import com.elroykanye.sadues.data.enums.AssociationType;
 import com.elroykanye.sadues.data.repository.AssociationRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,23 +27,25 @@ public class AssociationServiceImpl implements AssociationService {
     private final AssociationRepository associationRepository;
     private final AssociationMapper associationMapper;
     private final UniversityService universityService;
+    private final UserService userService;
 
-    
     @Override
     public SaResponse create( AssociationDto dto) {
-        Association association = associationMapper.associationDtoToAssociation(dto);
+        User user = userService.getEntity(dto.creatorId());
         University university = universityService.getEntity(dto.universityId());
+
+        Association association = associationMapper.associationDtoToAssociation(dto);
         association.setId(null);
         association.setUniversity(university);
+        association.setCreator(user);
 
         if(dto.headAssociationId() == null) {
             Association mainAssociation = associationRepository.findByUniversityAndType(university, AssociationType.MAIN).orElseGet(
                     () -> {
                         var mainAssoc = Association.builder()
                                 .name(String.format("%s Student Association", university.getName()))
-                                .type(AssociationType.MAIN)
-                                .university(university)
-                                .id(null)
+                                .type(AssociationType.MAIN).university(university).id(null)
+                                .creator(user) // TODO change this to use the super admin user profile
                                 .build();
                         return associationRepository.save(mainAssoc);
                     }
