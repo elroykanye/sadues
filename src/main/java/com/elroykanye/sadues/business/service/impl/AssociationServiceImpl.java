@@ -102,6 +102,10 @@ public class AssociationServiceImpl implements AssociationService {
             University university = universityService.getEntity(dto.universityId());
             association.setUniversity(university);
         }
+        if (!Objects.equals(association.getCreator().getId(), dto.creatorId())) {
+            User user = userService.getEntity(dto.creatorId());
+            association.setCreator(user);
+        }
         association = associationRepository.save(association);
         return new SaResponse(association.getId(), ResponseMessage.SUCCESS.created(entityName));
     }
