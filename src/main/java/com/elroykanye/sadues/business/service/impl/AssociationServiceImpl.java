@@ -80,6 +80,13 @@ public class AssociationServiceImpl implements AssociationService {
         return associationRepository.findAll();
     }
 
+    @Override
+    public List<AssociationDto> getAllDtoByUniversity(Long universityId) {
+        University university = universityService.getEntity(universityId);
+        return associationRepository.findAllByUniversity(university)
+                .stream().map(associationMapper::associationToAssociationDto).toList();
+    }
+
     
     @Override
     public List<AssociationDto> getAllDto() {
