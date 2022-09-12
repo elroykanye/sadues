@@ -4,6 +4,8 @@ import com.elroykanye.sadues.api.dto.UserDto;
 import com.elroykanye.sadues.api.dto.response.SaResponse;
 import com.elroykanye.sadues.business.mapper.UserMapper;
 import com.elroykanye.sadues.business.service.i.AuthService;
+import com.elroykanye.sadues.business.service.i.UniversityService;
+import com.elroykanye.sadues.data.entity.University;
 import com.elroykanye.sadues.data.entity.User;
 import com.elroykanye.sadues.data.enums.Role;
 import com.elroykanye.sadues.data.repository.UserRepository;
@@ -25,6 +27,7 @@ public class AuthServiceImpl implements AuthService {
     private final AuthenticationManager authenticationManager;
     private final UserMapper userMapper;
     private final UserRepository userRepository;
+    private final UniversityService universityService;
 
     @Override
     public SaResponse register(UserDto.UserRegister userRegister) {
@@ -35,6 +38,10 @@ public class AuthServiceImpl implements AuthService {
         user.setPassword(passwordEncoder.encode(userRegister.password()));
         user.setRole(Role.USER);
         user.setId(null);
+        if (userRegister.user().universityId() != null) {
+            University university = universityService.getEntity(userRegister.user().universityId());
+            user.setUniversity(university);
+        }
         return new SaResponse(userRepository.save(user).getEmail(), "Successfully created account");
     }
 
