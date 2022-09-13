@@ -76,6 +76,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         if (!Objects.equals(user.getName(), dto.name())) {
             user.setName(dto.name());
         }
+        if (dto.universityId() != null) {
+            University university = universityService.getEntity(dto.universityId());
+            user.setUniversity(university);
+        }
         user = userRepository.save(user);
         return new SaResponse(user.getId(), ResponseMessage.SUCCESS.updated(ENTITY_NAME));
     }
