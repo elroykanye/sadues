@@ -50,7 +50,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return userMapper.userToUserDto(getEntity(id));
     }
 
-    
+    @Override
+    public UserDto getDtoByEmail(String email) {
+        return userMapper.userToUserDto(userRepository.findByEmail(email).orElseThrow());
+    }
+
     @Override
     public List<User> getAllEntities() {
         return userRepository.findAll();
