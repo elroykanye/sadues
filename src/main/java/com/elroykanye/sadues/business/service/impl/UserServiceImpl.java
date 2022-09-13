@@ -3,15 +3,14 @@ package com.elroykanye.sadues.business.service.impl;
 import com.elroykanye.sadues.api.dto.UserDto;
 import com.elroykanye.sadues.api.dto.response.SaResponse;
 import com.elroykanye.sadues.business.mapper.UserMapper;
+import com.elroykanye.sadues.business.service.i.UniversityService;
 import com.elroykanye.sadues.business.service.i.UserService;
 import com.elroykanye.sadues.config.constants.EntityName;
 import com.elroykanye.sadues.config.constants.ResponseMessage;
+import com.elroykanye.sadues.data.entity.University;
 import com.elroykanye.sadues.data.entity.User;
 import com.elroykanye.sadues.data.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -26,11 +25,15 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private final String ENTITY_NAME = EntityName.USER;
     private final UserRepository userRepository;
     private final UserMapper userMapper;
-
+    private final UniversityService universityService;
     
     @Override
     public SaResponse create( UserDto dto) {
         User user = userMapper.userDtoToUser(dto);
+        if (dto.universityId() != null) {
+            University university = universityService.getEntity(dto.universityId());
+            user.setUniversity(university);
+        }
         user = userRepository.save(user);
         return new SaResponse(user.getId(), ResponseMessage.SUCCESS.created(ENTITY_NAME));
     }
