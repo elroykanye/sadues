@@ -15,6 +15,7 @@ import org.mapstruct.ReportingPolicy;
 public interface AssociationMapper {
     @Mapping(source = "universityId", target = "university.id")
     @Mapping(source = "headAssociationId", target = "headAssociation.id")
+    @Mapping(source = "creatorId", target = "creator.id")
     Association associationDtoToAssociation(AssociationDto associationDto);
 
     @InheritInverseConfiguration(name = "associationDtoToAssociation")
