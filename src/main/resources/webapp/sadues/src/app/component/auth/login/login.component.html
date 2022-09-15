@@ -6,8 +6,8 @@
   </div>
   <div class="bg-teal-50 border-round w-full flex align-self-center justify-content-center">
     <form [formGroup]="loginForm" (submit)="loginAction()" class="w-8 lg:w-6 py-4 lg:py-6">
-      <label for="username" class="block text-700 font-medium mb-2">Email</label>
-      <input id="username" pInputText class="w-full mb-3" [formControlName]="'username'">
+      <label for="email" class="block text-700 font-medium mb-2">Email</label>
+      <input id="email" pInputText class="w-full mb-3" [formControlName]="'email'">
 
       <label for="password" class="block text-700 font-medium mb-2">Password</label>
       <input id="password" pPassword class="w-full mb-3" [formControlName]="'password'">
