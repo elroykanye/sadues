@@ -5,6 +5,7 @@ import com.elroykanye.sadues.data.entity.Association;
 import com.elroykanye.sadues.data.entity.User;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.ReportingPolicy;
@@ -16,6 +17,7 @@ import java.util.stream.Collectors;
 public interface UserMapper {
     User userDtoToUser(UserDto userDto);
 
+    @Mapping(source = "university.id", target = "universityId")
     UserDto userToUserDto(User user);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
