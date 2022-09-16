@@ -33,7 +33,7 @@
       <p-dropdown id="university" [options]="universities" [optionLabel]="'name'" [optionValue]="'id'"
         [styleClass]="'w-full mb-3'" placeholder="Select University" [formControlName]="'university'"></p-dropdown>
 
-      <button pButton icon="pi pi-user-plus" label="Sign Up"></button>
+      <button [disabled]="!registerForm.valid" pButton icon="pi pi-user-plus" label="Sign Up"></button>
     </form>
   </div>
 
