@@ -28,6 +28,14 @@ export class LoginComponent implements OnInit {
   }
 
   loginAction() {
-
+    const userLogin: UserLogin = new UserLogin(
+      this.loginForm.get('email')?.value,
+      this.loginForm.get('password')?.value,
+    );
+    this.authService.login(userLogin).subscribe((res) => {
+      StorageUtil.setToken(res.message);
+      StorageUtil.setUserEmail(res.id);
+      this.router.navigate(['/account']).then();
+    });
   }
 }
