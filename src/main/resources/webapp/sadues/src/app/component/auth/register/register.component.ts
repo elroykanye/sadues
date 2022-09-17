@@ -3,8 +3,8 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Gender, User, UserRegister} from "../../../model/user.model";
 import {University} from "../../../model/university.model";
 import {Router} from "@angular/router";
-import {AcademicYearService} from "../../../service/academic-year.service";
 import {AuthService} from "../../../service/auth.service";
+import {UniversityService} from "../../../service/university.service";
 
 @Component({
   selector: 'app-register',
@@ -19,7 +19,8 @@ export class RegisterComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private universityService: UniversityService
 
   ) {
     this.registerForm = this.fb.group({
