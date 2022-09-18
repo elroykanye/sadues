@@ -32,6 +32,11 @@ export class RegisterComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.loadUniversities();
+  }
+
+  loadUniversities = () => {
+    this.universityService.getAll().subscribe((universities) => this.universities = universities);
   }
 
   registerAction() {
@@ -42,15 +47,16 @@ export class RegisterComponent implements OnInit {
       this.registerForm.get('name')?.value,
       this.registerForm.get('role')?.value,
       this.registerForm.get('gender')?.value,
+      this.registerForm.get('university')?.value,
     );
     const userRegister: UserRegister = new UserRegister(
-      this.registerForm.get('email')?.value, this.registerForm.get('email')?.value, user
+      this.registerForm.get('email')?.value, this.registerForm.get('password')?.value, user
     );
     console.log(userRegister);
-    /*
-    this.authService.register(userRegister).subscribe((res) => {
+
+
+    this.authService.register(userRegister).subscribe(() => {
       this.router.navigate(['/login']).then();
     });
-     */
   }
 }
