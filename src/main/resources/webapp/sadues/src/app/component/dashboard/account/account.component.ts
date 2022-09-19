@@ -2,6 +2,10 @@ import {Component, OnInit} from '@angular/core';
 import {Gender, Role, User} from "../../../model/user.model";
 import {Assoc} from "../../../model/assoc.model";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {UserService} from "../../../service/user.service";
+import {StorageUtil} from "../../../storage.util";
+import {UniversityService} from "../../../service/university.service";
+import {University} from "../../../model/university.model";
 
 @Component({
   selector: 'app-account',
@@ -10,7 +14,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 })
 export class AccountComponent implements OnInit {
   user: User;
-  userForm: FormGroup;
+  userForm: FormGroup = this.fb.group({});
   association: Assoc[] = [];
   constructor(private fb: FormBuilder) {
     this.user = new User(1, 'john.doe@email.com', 'REG', 'John Doe', Role.USER, Gender.MALE);
