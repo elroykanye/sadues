@@ -16,8 +16,39 @@ export class AccountComponent implements OnInit {
   user: User;
   userForm: FormGroup = this.fb.group({});
   association: Assoc[] = [];
-  constructor(private fb: FormBuilder) {
-    this.user = new User(1, 'john.doe@email.com', 'REG', 'John Doe', Role.USER, Gender.MALE);
+  universities: University[] = [];
+  constructor(
+    private fb: FormBuilder,
+    private userService: UserService,
+    private universityService: UniversityService
+  ) {
+    this.user = new User(1, 'john.doe@email.com', 'REG', 'John Doe', Role.USER, Gender.MALE, 0);
+    this.prepareForm();
+  }
+
+  ngOnInit(): void {
+    this.loadUser();
+    this.loadUniversities();
+  }
+
+  loadUser = () => {
+    const email = StorageUtil.getUserEmail();
+    this.userService.getByEmail(email).subscribe(user => {
+      this.user = user;
+      this.prepareForm();
+      StorageUtil.setUser(user);
+    })
+  }
+
+  loadUniversities = () => this.universityService.getAll().subscribe(unis => this.universities = unis);
+
+  updateUserAction = () => {
+    this.user.email = this.userForm.get('email')?.value;
+    this.user.universityId = this.userForm.get('university')?.value;
+    this.userService.update(this.user).subscribe();
+  }
+
+  prepareForm = () => {
     this.userForm = this.fb.group({
       email: [{value: this.user.email, disabled: false}, Validators.required],
       regno: [{value: this.user.regNo, disabled: true}, Validators.required],
