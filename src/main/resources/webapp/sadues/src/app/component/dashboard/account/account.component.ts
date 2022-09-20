@@ -54,11 +54,7 @@ export class AccountComponent implements OnInit {
       regno: [{value: this.user.regNo, disabled: true}, Validators.required],
       name: [{value: this.user.name, disabled: true}, Validators.required],
       role: [{value: this.user.role, disabled: true}, Validators.required],
-      university: [{value: 'University of Bamenda', disabled: true}, Validators.required],
-    })
+      university: [0, Validators.required],
+    });
   }
-
-  ngOnInit(): void {
-  }
-
 }
