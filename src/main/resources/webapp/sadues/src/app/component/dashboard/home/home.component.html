@@ -9,4 +9,17 @@
       </form>
     </p-panel>
   </div>
+  <div class="mb-4">
+    <p-panel [header]="'Create a Student Association'" [toggleable]="true">
+      <form (submit)="createAssocAction()" [formGroup]="associationForm">
+        <label for="name" class="block text-900 font-medium mb-2">Name</label>
+        <input id="name" class="w-full mb-3" pInputText [formControlName]="'name'">
+
+        <label for="hassoc" class="block text-900 font-medium mb-2">Head Association</label>
+        <p-dropdown id="hassoc" placeholder="Select head association" [options]="associations" [optionLabel]="'name'"
+                    [optionValue]="'id'" [styleClass]="'w-full mb-3'" [formControlName]="'hassoc'"></p-dropdown>
+        <button pButton icon="pi pi-user-plus" label="Create"></button>
+      </form>
+    </p-panel>
+  </div>
 </section>
