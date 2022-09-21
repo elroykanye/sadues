@@ -3,7 +3,8 @@ export class Assoc {
     public id: number,
     public name: string,
     public universityId: number,
-    public headAssociationId?: number
+    public creatorId: number,
+    public headAssociationId?: number,
   ) {
   }
 }
