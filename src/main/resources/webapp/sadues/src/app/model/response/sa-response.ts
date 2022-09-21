@@ -1,4 +1,4 @@
-export interface SaResponse {
-  id: any;
-  message: string;
+export class SaResponse {
+  constructor(public id: any, public message: string) {
+  }
 }
