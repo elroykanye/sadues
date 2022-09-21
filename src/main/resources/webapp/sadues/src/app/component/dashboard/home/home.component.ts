@@ -58,4 +58,17 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  createAssocAction() {
+    if (this.user && this.user.universityId) {
+      const association: Assoc = {
+        id: -1,
+        name: this.associationForm.get('name')?.value,
+        creatorId: this.user.id,
+        universityId: this.user.universityId,
+        headAssociationId: this.associationForm.get('hassoc')?.value,
+      }
+      console.log(association)
+      this.associationService.create(association).subscribe();
+    }
+  }
 }
