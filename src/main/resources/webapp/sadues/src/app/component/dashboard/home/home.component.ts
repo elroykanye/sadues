@@ -35,6 +35,27 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.loadAssociations();
+  }
+
+  private loadAssociations = () => {
+    if (this.user && this.user.universityId) {
+      this.associationService.getByUniversity(this.user.universityId)
+        .subscribe(associations => this.associations = associations)
+    }
+  }
+
+  createMembershipAction() {
+    if (this.user) {
+      const membership: Membership = {
+        key : {
+          associationId: this.membershipForm.get('assoc')?.value,
+          userId: this.user?.id
+        },
+        position: Position.MEMBER
+      }
+      this.membershipService.create(membership).subscribe();
+    }
   }
 
 }
