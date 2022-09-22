@@ -17,6 +17,5 @@ export class AuthService {
 
   register = (userRegister: UserRegister): Observable<SaResponse> => this.http.post<SaResponse>(`${this.apiUrl}/register`, userRegister);
   login = (userLogin: UserLogin): Observable<SaResponse> => this.http.post<SaResponse>(`${this.apiUrl}/login`, userLogin);
-
-   */
+  check = (): Observable<boolean> => this.http.get<boolean>(`${this.apiUrl}/check`);
 }
