@@ -15,7 +15,6 @@ export class AuthService {
     private http: HttpClient
   ) { }
 
-  /*
   register = (userRegister: UserRegister): Observable<SaResponse> => this.http.post<SaResponse>(`${this.apiUrl}/register`, userRegister);
   login = (userLogin: UserLogin): Observable<SaResponse> => this.http.post<SaResponse>(`${this.apiUrl}/login`, userLogin);
 
