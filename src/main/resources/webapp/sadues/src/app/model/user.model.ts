@@ -7,7 +7,8 @@ export class User {
     public regNo: string,
     public name: string,
     public role: string,
-    public gender: Gender
+    public gender: Gender,
+    public universityId: number
   ) {}
 }
 
