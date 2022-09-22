@@ -21,4 +21,6 @@ export class AssocService {
   getById = (id: number): Observable<Assoc> => this.http.get<Assoc>(`${this.apiUrl}/${id}`);
   update = (assoc: Assoc): Observable<SaResponse> => this.http.put<SaResponse>(this.apiUrl, assoc);
   delete = (id: number): Observable<void> => this.http.delete<void>(`${this.apiUrl}/${id}`);
+
+  getByUniversity = (universityId: number): Observable<Assoc[]> => this.http.get<Assoc[]>(`${this.apiUrl}/uni/${universityId}`);
 }
