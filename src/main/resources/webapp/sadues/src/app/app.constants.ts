@@ -9,5 +9,5 @@ export const AUTH_API_URL = `${serverApiUrl}/auth`;
 export const DUES_INFO_API_URL = `${serverApiUrl}/dues_info`;
 export const DUES_PAYMENT_API_URL = `${serverApiUrl}/dues_payment`;
 export const MEMBERSHIP_API_URL = `${serverApiUrl}/membership`;
-export const UNIVERSITY_API_URL = `${serverApiUrl}/user`;
-export const USER_API_URL = `${serverApiUrl}/university`;
+export const UNIVERSITY_API_URL = `${serverApiUrl}/university`;
+export const USER_API_URL = `${serverApiUrl}/user`;
