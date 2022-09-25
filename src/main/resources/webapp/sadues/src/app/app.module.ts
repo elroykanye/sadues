@@ -59,7 +59,10 @@ import {AuthInterceptor} from "./interceptor/auth.interceptor";
     ToastModule
   ],
   providers: [
-    SERVICE_INJECTABLES
+    SERVICE_INJECTABLES,
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: ResponseMessageInterceptor, multi: true},
+    {provide: MessageService, useClass: MessageService}
   ],
   bootstrap: [AppComponent]
 })
