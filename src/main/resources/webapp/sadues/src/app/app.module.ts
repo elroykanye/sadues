@@ -22,8 +22,12 @@ import {RippleModule} from "primeng/ripple";
 import {DividerModule} from "primeng/divider";
 import {PanelModule} from "primeng/panel";
 import {RadioButtonModule} from "primeng/radiobutton";
-import {HttpClientModule} from "@angular/common/http";
-import {AuthService} from "./service/auth.service";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+import {ResponseMessageInterceptor} from "./interceptor/response-message.interceptor";
+import {MessageService} from "primeng/api";
+import {ToastModule} from "primeng/toast";
+import { MainComponent } from './component/nav/main/main.component';
+import {AuthInterceptor} from "./interceptor/auth.interceptor";
 
 @NgModule({
   declarations: [
@@ -34,7 +38,8 @@ import {AuthService} from "./service/auth.service";
     HomeComponent,
     HeaderComponent,
     FooterComponent,
-    PayDuesComponent
+    PayDuesComponent,
+    MainComponent
   ],
   imports: [
     BrowserModule,
