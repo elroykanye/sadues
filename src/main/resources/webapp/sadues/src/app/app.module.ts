@@ -55,7 +55,8 @@ import {AuthInterceptor} from "./interceptor/auth.interceptor";
     RippleModule,
     DividerModule,
     PanelModule,
-    RadioButtonModule
+    RadioButtonModule,
+    ToastModule
   ],
   providers: [
     SERVICE_INJECTABLES
