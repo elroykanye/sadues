@@ -28,7 +28,7 @@ import java.util.Date;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "dues_payment")
+@Table(name = "sa_dues_payment")
 public class DuesPayment {
      @Id @GeneratedValue(strategy = GenerationType.IDENTITY) private Long id;
      @Column(nullable = false) private Double amount;

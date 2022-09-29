@@ -23,7 +23,7 @@ import java.util.Set;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "association")
+@Table(name = "sa_association")
 public class Association {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY) private Long id;
 	@Column(nullable = false, unique = true) private String name;

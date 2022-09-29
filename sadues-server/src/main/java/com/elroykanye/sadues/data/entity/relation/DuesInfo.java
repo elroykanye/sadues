@@ -25,7 +25,7 @@ import javax.persistence.Table;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "dues_info")
+@Table(name = "sa_dues_info")
 public class DuesInfo {
     @EmbeddedId private DuesInfoKey key;
     @Column(name = "amount", nullable = false) private Double amount;

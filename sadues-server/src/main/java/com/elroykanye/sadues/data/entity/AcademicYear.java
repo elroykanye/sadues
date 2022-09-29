@@ -26,7 +26,7 @@ import java.util.List;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "academic_year")
+@Table(name = "sa_academic_year")
 public class AcademicYear {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY) private Long id;
 	@Column( nullable = false) private String name;

@@ -29,7 +29,7 @@ import java.util.Set;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "university")
+@Table(name = "sa_university")
 public class University {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY) private Long id;
 	@Column(nullable = false, unique = true) private String name;

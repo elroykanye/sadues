@@ -32,7 +32,7 @@ import java.util.List;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Table()
+@Table(name = "sa_membership")
 public class Membership {
 	@EmbeddedId private MembershipKey key;
 	@Column(name = "joined_year", nullable = false) private String joinedYear;
