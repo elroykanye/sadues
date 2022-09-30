@@ -38,6 +38,7 @@ public class User {
     @Column(unique = true, nullable = false) private String regNo;
     @Column(nullable = false) private String name;
     @Column(nullable = false) private String password;
+    @Column(nullable = false) private Boolean approved;
     @Enumerated(EnumType.STRING) @Column(nullable = false) private Role role;
 
     @Enumerated(EnumType.STRING) @Column(nullable = false) private Gender gender;
