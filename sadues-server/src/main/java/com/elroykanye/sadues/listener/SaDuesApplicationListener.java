@@ -30,8 +30,15 @@ public class SaDuesApplicationListener implements ApplicationListener<Applicatio
     @SneakyThrows
     @Override
     public void onApplicationEvent(@NotNull ApplicationReadyEvent event) {
+        log.info("Creating default admin account");
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println();
         List<User> superAdmins = userRepository.findAllByRole(Role.ADMIN);
         if (superAdmins.size() == 0) {
+            log.info("Creating default admin account");
             User superAdmin = User.builder()
                     .name("Admin").email("admin")
                     .password(passwordEncoder.encode("password"))
